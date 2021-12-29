@@ -16,34 +16,46 @@
 
 <script lang="ts">
 import { ref, defineComponent, defineProps, computed } from 'vue'
-import { endOfMonth, startOfMonth, differenceInCalendarDays, addDays, addMonths, getDate, subDays, subMonths } from 'date-fns'
-
-defineProps<{ msg: string }>()
+import {
+  endOfMonth,
+  startOfMonth,
+  differenceInCalendarDays,
+  addDays,
+  addMonths,
+  getDate,
+  subDays,
+  subMonths
+} from 'date-fns'
 
 export default defineComponent({
-  name: 'Calendar',
-  // TODO: 次はこれらをsetupに移すのと、axiosを使ったAPI通信を行いたい
+  name: 'MonthlyCalendar',
+  props: {
+    currentDate: {
+      type: Date,
+      required: true,
+    }
+  },
   data() {
     return {
-      currentDate: new Date(),
+      currentViewDate: this.currentDate as date
     }
   },
   computed: {
-    dayOfWeekStr() {
+    dayOfWeekStr(): string[] {
       return [ "日", "月", "火", "水", "木", "金", "土" ]
     },
-    endDate() {
-      return endOfMonth(this.currentDate)
+    endDate(): date {
+      return endOfMonth(this.currentViewDate)
     },
-    startOfCurrentMonth() {
-      return startOfMonth(this.currentDate)
+    startOfCurrentMonth(): date {
+      return startOfMonth(this.currentViewDate)
     },
-    weekNumber() {
-      return Math.ceil(differenceInCalendarDays(this.endDate, startOfMonth(this.currentDate)) / 7)
+    weekNumber(): number {
+      return Math.ceil(differenceInCalendarDays(this.endDate, this.startOfCurrentMonth) / 7)
     },
   },
   methods: {
-    getCalendar() {
+    getCalendar(): array {
       let startDate = subDays(this.startOfCurrentMonth, this.startOfCurrentMonth.getDay())
       const calendars = [];
       for (let week = 0; week < this.weekNumber; week++) {
@@ -58,11 +70,15 @@ export default defineComponent({
       }
       return calendars;
     },
-    handleBeforeMonth() {
-      this.currentDate = subMonths(this.currentDate, 1)
+    handleBeforeMonth(): void {
+      this.currentViewDate = subMonths(this.currentViewDate, 1)
     },
-    handleNextMonth() {
-      this.currentDate = addMonths(this.currentDate, 1)
+    handleChangeView(view: string): void {
+      console.log(view)
+      this.$emit('changeView', view)
+    },
+    handleNextMonth(): void {
+      this.currentViewDate = addMonths(this.currentViewDate, 1)
     },
   },
 })
