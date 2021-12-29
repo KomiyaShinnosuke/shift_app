@@ -62,21 +62,17 @@ export default defineComponent({
   box-shadow: inset 0 1px 3px 0 rgb(0 0 0 / 5%);
   color: #2D2D2D;
   height: 36px;
-  width: 100%; // 一旦
   font-size: 14px;
-  padding: 0 16px;
   border-color: #DBDBDB;
   border-radius: 2px;
-  padding-right: 20px;
   background-color: #FAFAFB;
   border-left: 0px;
   &:focus {
-    box-shadow: 0 0 8px 0 rgba(221, 104, 103, 0.3);
-    border: 1px solid #DD6867;
+    box-shadow: 0 0 8px 0 rgba(130, 165, 206, 0.3);
+    border: 1px solid #82a5ce;
     border-left-width: 1px;
     z-index: 1;
     outline: none;
-    padding: 0 15px;
   }
   &::placeholder {
     font-family: 'Heebo', 'Yu Gothic', '游ゴシック', 'YuGothic', '游ゴシック体',

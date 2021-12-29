@@ -1,7 +1,7 @@
 <template>
   <button
     class="button"
-    :class="[sizeClass, elevationClass, { block: block }]"
+    :class="[sizeClass, { block: block }]"
     v-bind="$attrs"
     @click="$emit('click', $event)"
   >
@@ -19,11 +19,6 @@ export enum Size {
   XLarge = 'x-large',
 }
 
-export enum Elevation {
-  Low = 'low',
-  High = 'high',
-}
-
 export const ButtonProps = {
   size: {
     type: String,
@@ -32,10 +27,6 @@ export const ButtonProps = {
   block: {
     type: Boolean,
     default: false,
-  },
-  elevation: {
-    type: String,
-    default: Elevation.High,
   },
 };
 
@@ -47,8 +38,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const sizeClass = computed(() => `size_${props.size}`);
-    const elevationClass = computed(() => `elevation_${props.elevation}`);
-    return { sizeClass, elevationClass, emit };
+    return { sizeClass, emit };
   },
 });
 </script>
@@ -84,18 +74,6 @@ export default defineComponent({
   &.size_x-large {
     min-width: 200px;
     height: 52px;
-  }
-  &.elevation_low {
-    box-shadow: none;
-    &:hover {
-      box-shadow: none;
-    }
-    &:active {
-      box-shadow: none;
-    }
-  }
-  &.elevation_high {
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
   }
   &:hover {
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.25);

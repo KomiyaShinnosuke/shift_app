@@ -7,15 +7,15 @@
       </div>
     </section>
     <section class="input-area">
-      <InputWithLabel label="メールアドレス" width="300px" @input="handleInput($event, 'email')" />
+      <InputWithLabel label="メールアドレス" width="396px" @input="handleInput($event, 'email')" />
       <InputWithLabel
         class="password-input"
         label="パスワード"
         type="password"
-        width="300px"
+        width="396px"
         @input="handleInput($event, 'password')"
       />
-      <div class="hoge">ここにボタン</div>
+      <PrimaryButton class="button" :block="true" @click="onClick($event)">ログイン</PrimaryButton>
       <div class="caution">パスワードをお忘れの方</div>
     </section>
   </div>
@@ -24,9 +24,10 @@
 <script lang="ts" scoped>
 import { defineComponent, ref } from 'vue';
 import { InputWithLabel } from '../../atoms/Input'
+import { PrimaryButton } from '../../atoms/Button'
 
 export default defineComponent({
-  components: { InputWithLabel },
+  components: { InputWithLabel, PrimaryButton },
   setup() {
     const email = ref<string>('');
     const password = ref<string>('');
@@ -44,10 +45,12 @@ export default defineComponent({
           return
       }
     };
+    const onClick = () => {
+      console.log(email.value, password.value)
+    }
     return {
       handleInput,
-      email,
-      password,
+      onClick,
     };
   },
 })
@@ -75,7 +78,7 @@ export default defineComponent({
     .password-input {
       margin-top: 20px;
     }
-    .hoge {
+    .button {
       margin-top: 36px;
     }
     .caution {

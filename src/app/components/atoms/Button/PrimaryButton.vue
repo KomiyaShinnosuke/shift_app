@@ -3,7 +3,6 @@
     class="host"
     :size="size"
     :block="block"
-    :elevation="elevation"
     v-bind="$attrs"
     @click="onClick($event)"
   >
@@ -14,6 +13,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import BaseButton, { ButtonProps } from './BaseButton.vue';
+
 export default defineComponent({
   components: { BaseButton },
   inheritAttrs: false,
@@ -32,19 +32,19 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .host {
-  border-color: #dd6867;
-  background-color: #dd6867;
+  border-color: #82a5ce;
+  background-color: #82a5ce;
   &:hover {
-    border-color: #c13e3b;
-    background-color: #c13e3b;
+    border-color: #7a9cc3;
+    background: #7a9cc3;
   }
   &:active {
-    border-color: #bf2926;
-    background-color: #bf2926;
+    border-color: #7291b5;
+    background-color: #7291b5;
   }
   &:disabled {
-    border-color: #f4d1d1;
-    background-color: #f4d1d1;
+    border-color: #d1ddea;
+    background-color: #d1ddea;
   }
 }
 </style>
