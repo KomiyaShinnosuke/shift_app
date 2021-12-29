@@ -15,7 +15,7 @@
         width="396px"
         @input="handleInput($event, 'password')"
       />
-      <PrimaryButton class="button" :block="true" @click="onClick($event)">ログイン</PrimaryButton>
+      <PrimaryButton class="button" :block="true" @click="onClick()">ログイン</PrimaryButton>
       <div class="caution">パスワードをお忘れの方</div>
     </section>
   </div>
