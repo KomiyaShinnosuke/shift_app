@@ -25,6 +25,7 @@
 import { defineComponent, ref } from 'vue';
 import { InputWithLabel } from '../../atoms/Input'
 import { PrimaryButton } from '../../atoms/Button'
+import client from '../../../../core/api'
 
 export default defineComponent({
   components: { InputWithLabel, PrimaryButton },
@@ -46,7 +47,13 @@ export default defineComponent({
       }
     };
     const onClick = () => {
-      console.log(email.value, password.value)
+      client.put('https://jsonplaceholder.typicode.com/posts/1', {
+        id: 1,
+        title: email.value,
+        body: password.value,
+        userId: 1,
+      })
+        .then(res => console.log(res))
     }
     return {
       handleInput,
