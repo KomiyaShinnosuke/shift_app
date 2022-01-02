@@ -47,7 +47,7 @@ export default defineComponent({
       }
     };
     const onClick = () => {
-      client.put('https://jsonplaceholder.typicode.com/posts/1', {
+      client.post('https://jsonplaceholder.typicode.com/posts', {
         id: 1,
         title: email.value,
         body: password.value,

@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import CalendarWrapperPage from './app/components/pages/CalendarWrapperPage/Index.vue'
+import MonthlyCalendarPage from './app/components/pages/MonthlyCalendarPage/Index.vue'
 import LoginPage from './app/components/pages/LoginPage/Index.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
-    name: 'login',
+    name: 'Login',
     component: LoginPage,
   },
   {
-    path: '/calendar',
-    name: 'calendar',
-    component: CalendarWrapperPage,
+    path: '/calendar/monthly',
+    name: 'MonthlyCalendar',
+    component: MonthlyCalendarPage,
   }
 ]
 
