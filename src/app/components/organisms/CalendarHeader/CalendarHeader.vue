@@ -6,10 +6,23 @@
       <router-link class="selector" :class="{ selected: isMonthSelected }" :to="{ name: 'MonthlyCalendar' }">月</router-link>
     </section>
     <section class="date-change">
-      <button @click="handleClickBefore">&lt</button>
-        <span v-if="isMonthSelected">{{ currentMonth }}月</span>
-        <span v-if="isWeekSelected">{{ startWeek }} 〜 {{ endWeek }}</span>
-      <button @click="handleClickNext">></button>
+      <button class="today" @click="handleClickToday">今日</button>
+      <div class="arrow" @click="handleClickBefore">&lt</div>
+        <div class="label">
+          <span v-if="isMonthSelected">{{ currentMonth }}月</span>
+          <span v-if="isWeekSelected">{{ startWeek }} 〜 {{ endWeek }}</span>
+        </div>
+      <div class="arrow" @click="handleClickNext">></div>
+    </section>
+    <section class="description">
+      <div class="items">
+        <div class="item"><canvas :style="canvasStyle('#7A9CC3')"></canvas>確定シフト</div>
+        <div class="item"><canvas :style="canvasStyle('#E96B6B')"></canvas>確定休み</div>
+      </div>
+      <div class="items">
+        <div class="item"><canvas :style="canvasStyle('#BEDAFA')"></canvas>希望シフト</div>
+        <div class="item"><canvas :style="canvasStyle('#EAB5B5')"></canvas>希望休み</div>
+      </div>
     </section>
   </div>
 </template>
@@ -45,12 +58,26 @@ export default defineComponent({
       const date: Date = endOfWeek(props.viewDate)
       return `${getMonth(date) + 1}月${getDate(date)}日(${DAY_OF_WEEK_STR[getDay(date)]})`
     })
+    const canvasStyle = ((color: string) => {
+      return {
+        'background-color': color,
+        'border-radius': '20px',
+        bottom: '1px',
+        height: '15px',
+        'margin-right': '4px',
+        position: 'relative',
+        width: '60px',
+      }
+    })
     const handleClickBefore = () => {
       context.emit('clickChangeDate', -1)
     };
     const handleClickNext = () => {
       context.emit('clickChangeDate', 1)
     };
+    const handleClickToday = () => {
+      context.emit('clickToday')
+    }
     return {
       isDateSelected,
       isWeekSelected,
@@ -58,8 +85,10 @@ export default defineComponent({
       currentMonth,
       startWeek,
       endWeek,
+      canvasStyle,
       handleClickBefore,
       handleClickNext,
+      handleClickToday,
     }
   },
 })
@@ -73,27 +102,43 @@ export default defineComponent({
   height: 60px;
   justify-content: space-between;
   padding: 0 40px;
-  &::after {
-    content: '';
-  }
   .view-mode-selector {
     .selector {
       border-color: #989494;
       border-radius: 1px;
-      border-width: 1px 1px 1px 0;
+      border-width: 1px;
       border-style: solid;
       color: black;
       display: inline-block;
       text-decoration: none;
       width: 24px;
-      &:first-child {
-        border-left: 1px #989494 solid;
-      }
       &:hover {
-        background-color: #A9A9A9;
+        background-color: #EAB5B5;
       }
       &.selected {
-        background-color: #E88D8D;
+        background-color: #E96B6B;
+      }
+    }
+  }
+  .date-change {
+    display: flex;
+    .today {
+      cursor: pointer;
+      margin-right: 28px;
+    }
+    .arrow {
+      cursor: pointer;
+    }
+    .label {
+      margin: 0 24px;
+    }
+  }
+  .description {
+    font-size: 14px;
+    .items {
+      display: flex;
+      .item {
+        margin-right: 20px;
       }
     }
   }

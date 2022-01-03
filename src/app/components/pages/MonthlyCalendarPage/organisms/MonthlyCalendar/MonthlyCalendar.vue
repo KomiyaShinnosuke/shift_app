@@ -41,7 +41,8 @@ export default defineComponent({
       return startOfMonth(props.viewDate)
     })
     const weekNumber = computed(() => {
-      return Math.ceil(differenceInCalendarDays(endDate.value, startOfCurrentMonth.value) / 7)
+      const startDate = subDays(startOfCurrentMonth.value, startOfCurrentMonth.value.getDay())
+      return Math.ceil(differenceInCalendarDays(endDate.value, startDate) / 7)
     })
     const getCalendar = () => {
       let startDate = subDays(startOfCurrentMonth.value, startOfCurrentMonth.value.getDay())
@@ -77,7 +78,7 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     .youbi {
-      min-width: 50px;
+      width: 150px;
       &:first-child {
         color: #E96B6B;
       }
@@ -90,7 +91,14 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     .cell {
-      min-width: 50px;
+      background-color: #F9F8F8;
+      border-color: #989494;
+      border-radius: 1px;
+      border-width: 1px;
+      border-style: solid;
+      height: 100px;
+      margin: -1px;
+      width: 150px;
     }
   }
 }
