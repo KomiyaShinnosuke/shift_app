@@ -7,12 +7,12 @@
       </div>
     </section>
     <section class="input-area">
-      <InputWithLabel label="メールアドレス" width="396px" @input="handleInput($event, 'email')" />
+      <InputWithLabel label="メールアドレス" width="320px" @input="handleInput($event, 'email')" />
       <InputWithLabel
         class="password-input"
         label="パスワード"
         type="password"
-        width="396px"
+        width="320px"
         @input="handleInput($event, 'password')"
       />
       <PrimaryButton class="button" :block="true" @click="onClick()">ログイン</PrimaryButton>

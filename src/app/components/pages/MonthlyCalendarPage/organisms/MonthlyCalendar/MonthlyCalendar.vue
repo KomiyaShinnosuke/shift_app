@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar">
+  <div class="monthly-calendar">
     <div class="header">
       <div class="youbi" v-for="youbi in dayOfWeekStr">
         {{ youbi }}
@@ -70,12 +70,14 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.calendar {
+.monthly-calendar {
+  margin: auto;
+  width: 1000px;
   .header {
     display: flex;
+    justify-content: space-between;
     .youbi {
-      display: inline-block;
-      width: 100px;
+      min-width: 50px;
       &:first-child {
         color: #E96B6B;
       }
@@ -86,8 +88,9 @@ export default defineComponent({
   }
   .row {
     display: flex;
+    justify-content: space-between;
     .cell {
-      width: 100px;
+      min-width: 50px;
     }
   }
 }

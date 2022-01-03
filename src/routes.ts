@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import MonthlyCalendarPage from './app/components/pages/MonthlyCalendarPage/Index.vue'
+import WeeklyCalendarPage from './app/components/pages/WeeklyCalendarPage/Index.vue'
 import LoginPage from './app/components/pages/LoginPage/Index.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -12,6 +13,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/calendar/monthly',
     name: 'MonthlyCalendar',
     component: MonthlyCalendarPage,
+  },
+  {
+    path: '/calendar/weekly',
+    name: 'WeeklyCalendar',
+    component: WeeklyCalendarPage,
   }
 ]
 

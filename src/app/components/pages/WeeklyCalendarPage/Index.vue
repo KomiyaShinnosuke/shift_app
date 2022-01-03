@@ -2,13 +2,13 @@
   <BodyLayout>
     <template v-slot:sub-header>
       <CalendarHeader
-        type = "monthly"
+        type = "weekly"
         :viewDate="viewDate"
         @clickChangeDate="handleChangeViewDate"
       />
     </template>
     <template v-slot:contents>
-      <MonthlyCalendar
+      <WeeklyCalendar
         :viewDate="viewDate"
       />
     </template>
@@ -22,16 +22,16 @@
 import { ref, defineComponent } from 'vue'
 import { BodyLayout } from '../../atoms/Layout'
 import { CalendarHeader } from '../../organisms/CalendarHeader'
-import { MonthlyCalendar } from './organisms/MonthlyCalendar'
-import { addMonths } from 'date-fns'
+import { WeeklyCalendar } from './organisms/WeeklyCalendar'
+import { addWeeks } from 'date-fns'
 
 export default defineComponent({
-  components: { BodyLayout, CalendarHeader, MonthlyCalendar },
+  components: { BodyLayout, CalendarHeader, WeeklyCalendar },
   setup() {
     const currentDate = ref<Date>(new Date());
     const viewDate = ref<Date>(new Date());
     const handleChangeViewDate = (value: number) => {
-      viewDate.value = addMonths(viewDate.value, value)
+      viewDate.value = addWeeks(viewDate.value, value)
     };
     return {
       currentDate,
