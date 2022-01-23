@@ -21,6 +21,7 @@ export default defineComponent({
     value: { type: String, default: '' },
     placeholder: { type: String, default: '' },
     type: { type: String, default: 'text' },
+    height: { type: String, default: '36px' },
     width: { type: String, default: '200px' },
   },
   emits: {
@@ -39,6 +40,7 @@ export default defineComponent({
     };
     const styles = computed<Record<string, string>>(() => {
       return {
+        height: props.height,
         width: props.width,
         'background-color': inputValue.value === '' ? '#FAFAFB' : '#FFFFFF',
       };
@@ -61,7 +63,6 @@ export default defineComponent({
   border: 1px solid transparent;
   box-shadow: inset 0 1px 3px 0 rgb(0 0 0 / 5%);
   color: #2D2D2D;
-  height: 36px;
   font-size: 14px;
   border-color: #DBDBDB;
   border-radius: 2px;

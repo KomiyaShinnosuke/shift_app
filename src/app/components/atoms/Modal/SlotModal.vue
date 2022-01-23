@@ -50,7 +50,8 @@ export default defineComponent({
       min-width: 600px;
       max-width: 880px;
       margin: auto;
-      background: #FFF;
+      background: #434242;
+      color: white;
       box-shadow: 0 0 2px 0 rgba(0,0,0,.3);
       text-align: left;
       border-radius: 4px;
