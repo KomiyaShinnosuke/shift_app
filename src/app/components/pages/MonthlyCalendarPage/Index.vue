@@ -11,7 +11,7 @@
       <SlotModal :isOpen="isOpen">
         <div>
           <header class="header">
-            <button class="close-button" @click="handleClickClose">x</button>
+            <v-icon @click="handleClickClose">mdi-close</v-icon>
             <span class="title">11月シフト希望提出フォーム</span>
           </header>
           <main class="body">
@@ -32,12 +32,16 @@
                     @input="handleInput($event)"
                   />
                 </div>
-                <div class="option-selector"></div>
+                <div class="option-selector">
+                  <Checkbox color="secondary" label="休み" />
+                  <Checkbox color="secondary" label="free" />
+                  <TextWithIcon icon="mdi-plus" text="コメント追加" />
+                </div>
               </div>
             </div>
           </main>
           <footer class="footer">
-            <button>シフト送信</button>
+            <v-btn color="blue">シフト送信</v-btn>
           </footer>
         </div>
       </SlotModal>
@@ -55,13 +59,23 @@
 import { ref,reactive, defineComponent } from 'vue'
 import { BodyLayout } from '../../atoms/Layout'
 import { CalendarHeader } from '../../organisms/CalendarHeader'
+import { Checkbox } from '../../atoms/Checkbox'
 import { InputWithLabel2 } from '../../atoms/Input'
 import { MonthlyCalendar } from './organisms/MonthlyCalendar'
 import { SlotModal } from '../../atoms/Modal'
+import { TextWithIcon }  from '../../molecules/TextWithIcon'
 import { addMonths } from 'date-fns'
 
 export default defineComponent({
-  components: { BodyLayout, CalendarHeader, InputWithLabel2, MonthlyCalendar, SlotModal },
+  components: {
+    BodyLayout,
+    CalendarHeader,
+    Checkbox,
+    InputWithLabel2,
+    MonthlyCalendar,
+    SlotModal,
+    TextWithIcon,
+  },
   setup() {
     const currentDate = new Date();
     const viewDate = ref<Date>(new Date());
@@ -119,8 +133,13 @@ export default defineComponent({
     overflow-y: scroll;
     padding: 24px;
     .each-date {
+      border-bottom: 1px solid white;
       display: flex;
-      height: 60px;
+      height: 80px;
+      padding: 12px 0;
+      .option-selector {
+        display: flex;
+      }
     }
     .input-time {
       display: flex;

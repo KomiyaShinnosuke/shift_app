@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="main">
-      <WeeklyBoard />
+      <WeeklyBoard :weekDays="weekDays" />
     </div>
   </div>
 </template>
@@ -53,10 +53,16 @@ export default defineComponent({
       }
       return weekRow;
     }
+    const weekDays = [
+      { name: "komiya", carolies: "12-15" },
+      { name: "kohsuke", carolies: "9-24" },
+      { name: "machida", carolies: "18-23" },
+    ]
     return {
       dayOfWeekStr,
       endDate,
       startDate,
+      weekDays,
       getCalendar,
     }
   },

@@ -6,13 +6,14 @@
       <router-link class="selector" :class="{ selected: isMonthSelected }" :to="{ name: 'MonthlyCalendar' }">月</router-link>
     </section>
     <section class="date-change">
-      <button class="today" @click="handleClickToday">今日</button>
-      <div class="arrow" @click="handleClickBefore">&lt</div>
+      <!-- TODO: buttonに切り出す -->
+      <v-btn class="today" @click="handleClickToday">今日</v-btn>
+      <Icon @handleClick="handleClickBefore" icon="mdi-menu-left" />
         <div class="label">
           <span v-if="isMonthSelected">{{ currentMonth }}月</span>
           <span v-if="isWeekSelected">{{ startWeek }} 〜 {{ endWeek }}</span>
         </div>
-      <div class="arrow" @click="handleClickNext">></div>
+      <Icon class="right" @handleClick="handleClickNext" icon="mdi-menu-right" />
     </section>
     <section class="description">
       <div class="items">
@@ -31,8 +32,10 @@
 import { defineComponent, computed } from 'vue'
 import { getMonth, startOfWeek, endOfWeek, getDate, getDay } from 'date-fns'
 import { DAY_OF_WEEK_STR } from '../../../../static/calendar'
+import { Icon } from '../../atoms/Icon'
 
 export default defineComponent({
+  components: { Icon },
   props: {
     type: { type: String, default: 'monthly' },
     viewDate: { type: Date, default: null },
@@ -126,8 +129,8 @@ export default defineComponent({
       cursor: pointer;
       margin-right: 28px;
     }
-    .arrow {
-      cursor: pointer;
+    .right {
+      transform: rotete(180deg);
     }
     .label {
       margin: 0 24px;
