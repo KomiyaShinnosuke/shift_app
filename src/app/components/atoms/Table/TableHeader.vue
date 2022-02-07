@@ -3,7 +3,7 @@
     <TableHeaderCell
       v-for="column in columns"
       :text="column.text"
-      :padding="column.padding"
+      :style="column.style"
     />
   </tr>
 </template>

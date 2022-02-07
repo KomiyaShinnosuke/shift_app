@@ -1,15 +1,7 @@
 <template>
   <div class="weekly-calendar">
-    <div class="header">
-      <div class="first-row">
-        <span v-for="youbi in dayOfWeekStr" :key="youbi" class="youbi">{{ youbi }}</span>
-      </div>
-      <div class="second-row">
-        <span v-for="(day, index) in getCalendar()" :key="index" class="date">{{ day.date }}</span>
-      </div>
-    </div>
     <div class="main">
-      <Table :columns="[]" :items="weekDays" />
+      <Table :columns="calendarHeader" :items="weekDays" />
     </div>
   </div>
 </template>
@@ -33,27 +25,20 @@ export default defineComponent({
     viewDate: { type: Date, required: true }
   },
   setup(props) {
-    const dayOfWeekStr = computed<string[]>(() => {
-      return DAY_OF_WEEK_STR
-    })
-    const endDate = computed(() => {
-      return endOfWeek(props.viewDate)
-    })
-    const startDate = computed(() => {
-      return startOfWeek(props.viewDate)
-    })
-    const getCalendar = () => {
-      let startDateOfWeek = subDays(startDate.value, startDate.value.getDay())
-      const weekRow = [];
-      for (let day = 0;  day < 7; day++) {
-        weekRow.push({
-          date: getDate(startDateOfWeek),
-        });
-        startDateOfWeek = addDays(startDateOfWeek, 1);
-      }
-      return weekRow;
-    }
+    let startDate = startOfWeek(props.viewDate)
     const weekDays = [
+      // {
+      //   name: "komiya",
+      //   shifts: ["10-16", "10-16", "10-16", "10-16", "10-16", "10-16", "10-16"]
+      // },
+      // {
+      //   name: "kohsuke",
+      //   shifts: ["10-16", "10-16", "10-16", "10-16", "10-16", "10-16", "10-16"]
+      // },
+      // {
+      //   name: "machida",
+      //   shifts: ["10-16", "10-16", "10-16", "10-16", "10-16", "10-16", "10-16"]
+      // },
       {
         name: "komiya",
         sunday: "10-16",
@@ -85,12 +70,26 @@ export default defineComponent({
         saturday: "10-16",
       },
     ]
+    const calendarHeader = computed(() => {
+      const weekDays = []
+      for (let i = 0; i < 7; i++) {
+        weekDays.push(startDate.getDate())
+        startDate.setDate( startDate.getDate() + 1 );
+      }
+      return [
+        {},
+        { text: `${weekDays[0]}(${DAY_OF_WEEK_STR[0]})`, style: { color: 'red' } },
+        { text: `${weekDays[1]}(${DAY_OF_WEEK_STR[1]})` },
+        { text: `${weekDays[2]}(${DAY_OF_WEEK_STR[2]})` },
+        { text: `${weekDays[3]}(${DAY_OF_WEEK_STR[3]})` },
+        { text: `${weekDays[4]}(${DAY_OF_WEEK_STR[4]})` },
+        { text: `${weekDays[5]}(${DAY_OF_WEEK_STR[5]})` },
+        { text: `${weekDays[6]}(${DAY_OF_WEEK_STR[6]})`, style: { color: 'blue' } },
+      ]
+    })
     return {
-      dayOfWeekStr,
-      endDate,
-      startDate,
       weekDays,
-      getCalendar,
+      calendarHeader,
     }
   },
 })

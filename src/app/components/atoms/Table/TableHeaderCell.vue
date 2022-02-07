@@ -1,6 +1,6 @@
 <template>
-  <th class="table-header-cell" :style="cellPadding">
-    <td v-if="text">{{ text }}</td>
+  <th class="table-header-cell" :style="cellStyle">
+    <td v-if="text" class="data">{{ text }}</td>
     <slot v-else />
   </th>
 </template>
@@ -10,24 +10,31 @@ import { defineComponent, computed } from 'vue'
 export default defineComponent({
   props: {
     text: { type: String, default: null },
-    padding: { type: Object, required: false },
-    // width: { type: Number, required: false },
+    style: { type: Object, default: {} },
   },
-  setup() {
-    const cellPadding = computed<Object>(() => {
+  setup(props) {
+    const cellStyle = computed<Object>(() => {
+      const { color, top, right, bottom, left } = props.style;
       return {
-        'padding-top': '${top}px',
-        'padding-left': '${left}px',
-        'padding-bottom': '${bottom}px',
-        'padding-right': '${right}px',
+        'color': `${color}`,
+        'padding-top': `${top}px`,
+        'padding-left': `${left}px`,
+        'padding-bottom': `${bottom}px`,
+        'padding-right': `${right}px`,
       }
     })
     return {
-      cellPadding,
+      cellStyle,
     }
   },
 })
 </script>
 
 <style lang="scss" scoped>
+.table-header-cell {
+    font-weight: 500;
+    .data {
+      display: inline-block;
+    }
+}
 </style>
