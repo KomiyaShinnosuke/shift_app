@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="main">
-      <WeeklyBoard :weekDays="weekDays" />
+      <Table :columns="[]" :items="weekDays" />
     </div>
   </div>
 </template>
@@ -23,12 +23,12 @@ import {
   getDate,
   subDays,
 } from 'date-fns'
-import { WeeklyBoard } from '../WeeklyBoard'
+import { Table } from '../../../../atoms/Table'
 import { DAY_OF_WEEK_STR } from '../../../../../../static/calendar'
 
 export default defineComponent({
   name: 'WeeklyCalendar',
-  components: { WeeklyBoard },
+  components: { Table },
   props: {
     viewDate: { type: Date, required: true }
   },
@@ -54,9 +54,36 @@ export default defineComponent({
       return weekRow;
     }
     const weekDays = [
-      { name: "komiya", carolies: "12-15" },
-      { name: "kohsuke", carolies: "9-24" },
-      { name: "machida", carolies: "18-23" },
+      {
+        name: "komiya",
+        sunday: "10-16",
+        monday: "10-16",
+        tuesday: "10-16",
+        wednesday: "10-16",
+        thursday: "10-16",
+        friday: "10-16",
+        saturday: "10-16",
+      },
+      {
+        name: "kohsuke",
+        sunday: "10-16",
+        monday: "10-16",
+        tuesday: "10-16",
+        wednesday: "10-16",
+        thursday: "10-16",
+        friday: "10-16",
+        saturday: "10-16",
+      },
+      {
+        name: "machida",
+        sunday: "10-16",
+        monday: "10-16",
+        tuesday: "10-16",
+        wednesday: "10-16",
+        thursday: "10-16",
+        friday: "10-16",
+        saturday: "10-16",
+      },
     ]
     return {
       dayOfWeekStr,
