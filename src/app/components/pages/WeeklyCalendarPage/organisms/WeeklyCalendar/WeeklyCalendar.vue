@@ -8,13 +8,7 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import {
-  endOfWeek,
-  startOfWeek,
-  addDays,
-  getDate,
-  subDays,
-} from 'date-fns'
+import { startOfWeek } from 'date-fns'
 import { Table } from '../../../../atoms/Table'
 import { DAY_OF_WEEK_STR } from '../../../../../../static/calendar'
 
@@ -25,7 +19,9 @@ export default defineComponent({
     viewDate: { type: Date, required: true }
   },
   setup(props) {
-    let startDate = startOfWeek(props.viewDate)
+    const startDate = computed<Date>(() => {
+      return startOfWeek(props.viewDate)
+    })
     const weekDays = [
       // {
       //   name: "komiya",
@@ -71,10 +67,11 @@ export default defineComponent({
       },
     ]
     const calendarHeader = computed(() => {
+      let date = startDate.value
       const weekDays = []
       for (let i = 0; i < 7; i++) {
-        weekDays.push(startDate.getDate())
-        startDate.setDate( startDate.getDate() + 1 );
+        weekDays.push(date.getDate())
+        date.setDate( date.getDate() + 1 );
       }
       return [
         {},
