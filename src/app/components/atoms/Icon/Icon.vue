@@ -1,6 +1,6 @@
 <template>
   <div class="icon">
-    <v-icon class="arrow" @click="handleClick">mdi-menu-left</v-icon>
+    <v-icon class="arrow" @click="handleClick">{{ icon }}</v-icon>
   </div>
 </template>
 

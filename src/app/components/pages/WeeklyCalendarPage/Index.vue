@@ -5,6 +5,7 @@
         type = "weekly"
         :viewDate="viewDate"
         @clickChangeDate="handleChangeViewDate"
+        @clickToday="handleClickToday"
       />
     </template>
     <template v-slot:contents>
@@ -28,15 +29,19 @@ import { addWeeks } from 'date-fns'
 export default defineComponent({
   components: { BodyLayout, CalendarHeader, WeeklyCalendar },
   setup() {
-    const currentDate = ref<Date>(new Date());
+    const currentDate = new Date();
     const viewDate = ref<Date>(new Date());
     const handleChangeViewDate = (value: number) => {
       viewDate.value = addWeeks(viewDate.value, value)
+    };
+    const handleClickToday = () => {
+      viewDate.value = currentDate
     };
     return {
       currentDate,
       viewDate,
       handleChangeViewDate,
+      handleClickToday,
     }
   },
 })

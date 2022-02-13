@@ -11,14 +11,10 @@
 
 <style scoped lang="scss">
 .body-layout {
-  max-width: 1200px;
-  .sub-header {
-    padding: 40px 0 20px;
-
-  }
+  min-width: 800px;
   .main-contents {
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 40px;
   }
 }
 </style>
