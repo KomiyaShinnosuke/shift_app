@@ -38,7 +38,6 @@ export default defineComponent({
       viewDate.value = currentDate
     };
     return {
-      currentDate,
       viewDate,
       handleChangeViewDate,
       handleClickToday,
