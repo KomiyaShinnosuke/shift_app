@@ -10,18 +10,8 @@
           <div class="date">{{ i+1 }}日（月）</div>
           <div>
             <div class="input-time">
-              <InputWithLabel2
-                label="開始日時："
-                height="24px"
-                width="100px"
-                @input="handleInput($event)"
-              />〜
-              <InputWithLabel2
-                label="終了日時："
-                height="24px"
-                width="100px"
-                @input="handleInput($event)"
-              />
+              開始時刻<Datepicker v-model="time" timePicker />〜
+              終了時刻<Datepicker v-model="time" timePicker />
             </div>
             <div class="option-selector">
               <Checkbox color="secondary" label="休み" />
@@ -39,11 +29,13 @@
 </template>
 
 <script lang="ts">
-import { ref,reactive, defineComponent } from 'vue'
+import { ref, reactive, defineComponent } from 'vue'
 import { Checkbox } from '../../atoms/Checkbox'
 import { InputWithLabel2 } from '../../atoms/Input'
 import { SlotModal } from '../../atoms/Modal'
 import { TextWithIcon }  from '../../molecules/TextWithIcon'
+import Datepicker from 'vue3-date-time-picker';
+import 'vue3-date-time-picker/dist/main.css'
 
 export default defineComponent({
   components: {
@@ -51,6 +43,7 @@ export default defineComponent({
     InputWithLabel2,
     SlotModal,
     TextWithIcon,
+    Datepicker,
   },
   props: {
     isOpen: { type: Boolean, default: false },
@@ -66,9 +59,14 @@ export default defineComponent({
     const handleInput = (data: string) => {
       shiftInput.start = data
     };
+    const time = ref({
+      hours: new Date().getHours(),
+      minutes: new Date().getMinutes()
+    });
     return {
       handleClickClose,
       handleInput,
+      time,
     }
   },
 })
@@ -100,6 +98,7 @@ export default defineComponent({
       padding: 12px 0;
       .option-selector {
         display: flex;
+        justify-content: space-between;
       }
     }
     .input-time {
