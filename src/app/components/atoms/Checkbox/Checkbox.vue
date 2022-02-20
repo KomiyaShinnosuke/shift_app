@@ -1,6 +1,7 @@
 <template>
   <div class="checkbox">
     <v-checkbox
+      class="inner"
       :color="color"
       :label="label"
     />
@@ -22,4 +23,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+  .checkbox {
+    .inner {
+      --v-input-control-height: auto; // checkboxの謎のCSSに影響されてこのスタイルを当てている
+    }
+  }
 </style>

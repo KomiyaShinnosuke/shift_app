@@ -3,7 +3,7 @@
     <v-app-bar app>
       <AppHeader />
     </v-app-bar>
-    <v-main>
+    <v-main class="main-area">
       <router-view />
     </v-main>
     <v-footer class="footer" app>
@@ -30,6 +30,9 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  .main-area {
+    text-align: center;
+  }
   .footer {
     padding: 0;
   }

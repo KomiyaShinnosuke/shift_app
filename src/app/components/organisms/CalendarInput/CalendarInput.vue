@@ -2,22 +2,23 @@
   <SlotModal class="calendar-input" :isOpen="isOpen">
     <div>
       <header class="header">
-        <v-icon @click="handleClickClose">mdi-close</v-icon>
         <span class="title">11月シフト希望提出フォーム</span>
+        <v-icon @click="handleClickClose">mdi-close</v-icon>
       </header>
       <main class="body">
         <div class="each-date" v-for="i in [...Array(30)].map((_, i) => i)">
           <div class="date">{{ i+1 }}日（月）</div>
           <div>
             <div class="input-time">
-              開始時刻<Datepicker v-model="time" timePicker />〜
-              終了時刻<Datepicker v-model="time" timePicker />
+              開始時刻<Datepicker class="input" v-model="time" timePicker />〜
+              終了時刻<Datepicker class="input" v-model="time" timePicker />
             </div>
             <div class="option-selector">
               <Checkbox color="secondary" label="休み" />
               <Checkbox color="secondary" label="free" />
-              <TextWithIcon icon="mdi-plus" text="コメント追加" />
+              <TextWithIcon @click="handleClickComment" class="comment" icon="mdi-plus" text="コメント追加" />
             </div>
+            <div v-if="openComment" class="comment-area"><v-textarea /></div>
           </div>
         </div>
       </main>
@@ -49,12 +50,18 @@ export default defineComponent({
     isOpen: { type: Boolean, default: false },
   },
   setup(props, context) {
+    const openComment = ref<boolean>(false);
     const shiftInput = reactive<{ start: string, end: string }>({
       start: "",
       end: "",
     })
     const handleClickClose = () => {
       context.emit('handleClose');
+    }
+    // 何故かこのイベントが発火しないのとモーダル表示が遅い
+    const handleClickComment = () => {
+      const open = true
+      openComment.value = open
     }
     const handleInput = (data: string) => {
       shiftInput.start = data
@@ -64,7 +71,9 @@ export default defineComponent({
       minutes: new Date().getMinutes()
     });
     return {
+      openComment,
       handleClickClose,
+      handleClickComment,
       handleInput,
       time,
     }
@@ -95,16 +104,26 @@ export default defineComponent({
       border-bottom: 1px solid white;
       display: flex;
       height: 80px;
-      padding: 12px 0;
+      padding-top: 12px;
+      padding-bottom: 78px; // checkboxの謎のCSSに影響されてこのスタイルを当てている
       .option-selector {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 4px;
+        .comment {
+          cursor: pointer;
+          margin-top: 10px;
+        }
       }
     }
     .input-time {
       display: flex;
       align-items: center;
       line-height: 1.5;
+      .input {
+        margin: 0 12px;
+        width: 120px;
+      }
     }
   }
   .footer {
