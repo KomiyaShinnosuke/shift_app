@@ -23,7 +23,7 @@ import {
   getDate,
   subDays,
 } from 'date-fns'
-import { DAY_OF_WEEK_STR } from '../../../../../../static/calendar'
+import { DAY_OF_WEEK_STR } from '~/static/calendar'
 
 export default defineComponent({
   name: 'MonthlyCalendar',

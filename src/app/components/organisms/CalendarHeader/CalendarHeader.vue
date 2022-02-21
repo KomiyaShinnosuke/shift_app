@@ -22,8 +22,8 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { getMonth, startOfWeek, endOfWeek, getDate, getDay } from 'date-fns'
-import { DAY_OF_WEEK_STR } from '../../../../static/calendar'
-import { Icon } from '../../atoms/Icon'
+import { DAY_OF_WEEK_STR } from '~/static/calendar'
+import { Icon } from '@/components/atoms/Icon'
 
 export default defineComponent({
   components: { Icon },

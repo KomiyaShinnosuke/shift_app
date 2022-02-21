@@ -21,8 +21,8 @@
 </style>
 <script lang="ts" scoped>
 import { ref, defineComponent } from 'vue'
-import { BodyLayout } from '../../atoms/Layout'
-import { CalendarHeader } from '../../organisms/CalendarHeader'
+import { BodyLayout } from '@/components/atoms/Layout'
+import { CalendarHeader } from '@/components/organisms/CalendarHeader'
 import { WeeklyCalendar } from './organisms/WeeklyCalendar'
 import { addWeeks } from 'date-fns'
 

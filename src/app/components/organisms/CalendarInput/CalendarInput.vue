@@ -31,10 +31,10 @@
 
 <script lang="ts">
 import { ref, reactive, defineComponent } from 'vue'
-import { Checkbox } from '../../atoms/Checkbox'
-import { InputWithLabel2 } from '../../atoms/Input'
-import { SlotModal } from '../../atoms/Modal'
-import { TextWithIcon }  from '../../molecules/TextWithIcon'
+import { Checkbox } from '@/components/atoms/Checkbox'
+import { InputWithLabel2 } from '@/components/atoms/Input'
+import { SlotModal } from '@/components/atoms/Modal'
+import { TextWithIcon }  from '@/components/molecules/TextWithIcon'
 import Datepicker from 'vue3-date-time-picker';
 import 'vue3-date-time-picker/dist/main.css'
 

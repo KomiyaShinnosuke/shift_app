@@ -23,9 +23,9 @@
 
 <script lang="ts" scoped>
 import { defineComponent, ref } from 'vue';
-import { InputWithLabel } from '../../atoms/Input'
-import { PrimaryButton } from '../../atoms/Button'
-import client from '../../../../core/api'
+import { InputWithLabel } from '@/components/atoms/Input'
+import { PrimaryButton } from '@/components/atoms/Button'
+import client from '~/core/api'
 
 export default defineComponent({
   components: { InputWithLabel, PrimaryButton },

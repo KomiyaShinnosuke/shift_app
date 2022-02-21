@@ -20,9 +20,9 @@
 
 <script lang="ts" scoped>
 import { ref,reactive, defineComponent } from 'vue'
-import { BodyLayout } from '../../atoms/Layout'
-import { CalendarHeader } from '../../organisms/CalendarHeader'
-import { CalendarInput } from '../../organisms/CalendarInput'
+import { BodyLayout } from '@/components/atoms/Layout'
+import { CalendarHeader } from '@/components/organisms/CalendarHeader'
+import { CalendarInput } from '@/components/organisms/CalendarInput'
 import { MonthlyCalendar } from './organisms/MonthlyCalendar'
 import { addMonths } from 'date-fns'
 

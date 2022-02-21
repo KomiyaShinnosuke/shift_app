@@ -9,8 +9,8 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { startOfWeek } from 'date-fns'
-import { Table } from '../../../../atoms/Table'
-import { DAY_OF_WEEK_STR } from '../../../../../../static/calendar'
+import { Table } from '@/components/atoms/Table'
+import { DAY_OF_WEEK_STR } from '~/static/calendar'
 
 export default defineComponent({
   name: 'WeeklyCalendar',

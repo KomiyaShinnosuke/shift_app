@@ -1,6 +1,6 @@
 <template>
   <div class="app-footer">
-    <v-btn>印刷</v-btn>
+    <v-btn>シフト提出</v-btn>
     <section class="description">
       <div class="items">
         <div class="item"><canvas :style="canvasStyle('#7A9CC3')"></canvas>確定シフト</div>
@@ -16,10 +16,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Button } from '../../atoms/Button'
 
 export default defineComponent({
-  components: { Button },
   setup() {
     const canvasStyle = ((color: string) => {
       return {

@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Icon } from '../../atoms/Icon'
+import { Icon } from '@/components/atoms/Icon'
 
 export default defineComponent({
   components: { Icon },
