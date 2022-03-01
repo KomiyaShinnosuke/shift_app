@@ -47,10 +47,10 @@ export default defineComponent({
       }
     };
     const onClick = () => {
-      client.post('http://0.0.0.0:8000/token', {
-        username: 'test@example.com',
-        password: 'test',
-      })
+      const params = new URLSearchParams();
+      params.append('username', 'test@example.com');
+      params.append('password', 'test');
+      client.post('http://0.0.0.0:8000/token', params)
         .then(res => console.log(res))
     }
     return {
