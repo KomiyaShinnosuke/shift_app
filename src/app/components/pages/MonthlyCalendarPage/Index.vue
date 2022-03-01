@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" scoped>
-import { ref,reactive, defineComponent } from 'vue'
+import { ref, defineComponent } from 'vue'
 import { BodyLayout } from '@/components/atoms/Layout'
 import { CalendarHeader } from '@/components/organisms/CalendarHeader'
 import { CalendarInput } from '@/components/organisms/CalendarInput'

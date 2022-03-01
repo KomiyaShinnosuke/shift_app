@@ -10,8 +10,8 @@
           <div class="date">{{ i+1 }}日（月）</div>
           <div>
             <div class="input-time">
-              開始時刻<Datepicker class="input" v-model="time" timePicker />〜
-              終了時刻<Datepicker class="input" v-model="time" timePicker />
+              開始時刻<Datepicker class="input" :minutesIncrement="15" v-model="time" timePicker />〜
+              終了時刻<Datepicker class="input" :minutesIncrement="15" v-model="time" timePicker />
             </div>
             <div class="option-selector">
               <Checkbox color="secondary" label="休み" />
