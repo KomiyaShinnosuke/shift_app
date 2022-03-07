@@ -1,6 +1,7 @@
 <template>
   <div class="weekly-calendar">
     <div class="main">
+      <!-- ここでTableHeaderとTableBodyに分けて配置するほうがいいかも -->
       <Table :columns="calendarHeader" :items="weekDays" />
     </div>
   </div>
