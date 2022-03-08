@@ -19,19 +19,27 @@
       <div class="caution">パスワードをお忘れの方</div>
     </section>
   </div>
+  <div v-if="showError" class="caution-area">
+    <span>入力された情報に基づくアカウントが見つかりませんでした。</span>
+    <Icon icon="mdi-close" @click="handleClickError" />
+  </div>
 </template>
 
 <script lang="ts" scoped>
 import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router'
+import { Icon } from '@/components/atoms/Icon'
 import { InputWithLabel } from '@/components/atoms/Input'
 import { PrimaryButton } from '@/components/atoms/Button'
 import client from '~/core/api'
 
 export default defineComponent({
-  components: { InputWithLabel, PrimaryButton },
+  components: { Icon, InputWithLabel, PrimaryButton },
   setup() {
+    const router = useRouter()
     const email = ref<string>('');
     const password = ref<string>('');
+    const showError = ref<boolean>(false);
     const handleInput = (data: string, type: string) => {
       switch(type) {
         case 'email': {
@@ -46,16 +54,30 @@ export default defineComponent({
           return
       }
     };
+    const initializeRouter = () => {
+      router.push({ name: 'MonthlyCalendar' })
+    }
     const onClick = () => {
+      showError.value = false;
       const params = new URLSearchParams();
-      params.append('username', 'test@example.com');
-      params.append('password', 'test');
+      params.append('username', email.value);
+      params.append('password', password.value);
       client.post('http://0.0.0.0:8000/token', params)
-        .then(res => console.log(res))
+        .then(_ => {
+          initializeRouter()
+        })
+        .catch(_ => {
+          showError.value = true;
+        })
+    }
+    const handleClickError = () => {
+      showError.value = false;
     }
     return {
+      showError,
       handleInput,
       onClick,
+      handleClickError,
     };
   },
 })
@@ -90,5 +112,15 @@ export default defineComponent({
       margin-top: 36px;
     }
   }
+}
+.caution-area {
+    border: 1px black solid;
+    border-radius: 4px;
+    border-left: 12px red solid;
+    display: flex;
+    margin: 60px 0 0 40px;
+    padding: 4px;
+    text-align: left;
+    width: max-content;
 }
 </style>
