@@ -1,10 +1,51 @@
 {
-  "posts": [
-    { "id": 1, "title": "json-server", "author": "typicode" }
-  ],
-  "comments": [
-    { "id": 1, "body": "some comment", "postId": 1 }
-  ],
-  "profile": { "name": "typicode" },
-  "kome": { "name": "typicode" }
+  "companies": {
+    "shifts": {
+      "shifts": {
+        "2022-3-13": [
+          {
+            "userId": 2,
+            "userName": "小宮慎ノ介",
+            "color": "#000080",
+            "startTime": "10:00:00",
+            "endTime": "12:00:00",
+            "type": "ホール",
+            "comment": "hoge"
+          },
+          {
+            "userId": 3,
+            "userName": "小宮慎ノ介",
+            "color": "#000080",
+            "startTime": "10:00:00",
+            "endTime": "12:00:00",
+            "type": "キッチン",
+            "comment": "fuga"
+          }
+        ],
+        "2022-3-14": [
+          {
+            "userId": 2,
+            "userName": "小宮慎ノ介",
+            "color": "#000080",
+            "startTime": "10:00:00",
+            "endTime": "12:00:00",
+            "type": "ホール",
+            "comment": "hoge"
+          },
+          {
+            "userId": 3,
+            "userName": "小宮慎ノ介",
+            "color": "#000080",
+            "startTime": "10:00:00",
+            "endTime": "12:00:00",
+            "type": "キッチン",
+            "comment": "fuga"
+          }
+        ]
+      },
+      "limitDate": "2022-01-01"
+    }
+  },
+  "users": {
+  }
 }
