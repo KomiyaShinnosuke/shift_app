@@ -14,6 +14,7 @@
   min-width: 800px;
   .main-contents {
     margin: 0 auto;
+    min-height: 600px;
     padding: 40px;
   }
 }

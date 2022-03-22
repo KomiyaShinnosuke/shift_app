@@ -85,8 +85,10 @@ export default defineComponent({
 .calendar-input {
   .header {
     border-bottom: 1px solid black;
+    display: flex;
     height: 60px;
     padding: 20px;
+    justify-content: space-between;
     .close-button {
       background-color: inherit;
       border: none;
@@ -97,7 +99,7 @@ export default defineComponent({
     }
   }
   .body {
-    max-height: 600px;
+    max-height: 500px;
     overflow-y: scroll;
     padding: 24px;
     .each-date {
