@@ -2,17 +2,21 @@
   <BodyLayout class="monthly-calendar-page">
     <template v-slot:sub-header>
       <CalendarHeader
-        type = "monthly"
+        type="monthly"
         :viewDate="viewDate"
         @clickChangeDate="handleChangeViewDate"
         @clickToday="handleClickToday"
       />
-      <CalendarInput :isOpen="isOpen" @handleClose="clickClose" />
+      <!-- propsで何渡す？初期読み込み時に既に入力されているのをそのまま表示するならシフト情報はPiniaから取得したほうがいいかも -->
+      <CalendarInput
+        :isOpen="isOpen"
+        @handleClose="clickClose"
+      />
     </template>
     <template v-slot:contents>
       <MonthlyCalendar
         :viewDate="viewDate"
-         @click="handleClickOpen"
+        @click="handleClickOpen"
       />
     </template>
   </BodyLayout>
@@ -24,6 +28,7 @@ import { BodyLayout } from '@/components/atoms/Layout'
 import { CalendarHeader } from '@/components/organisms/CalendarHeader'
 import { CalendarInput } from '@/components/organisms/CalendarInput'
 import { MonthlyCalendar } from './organisms/MonthlyCalendar'
+import { convertStringToDate } from '~/util/date' // 必要ないかも
 import { addMonths } from 'date-fns'
 
 export default defineComponent({
@@ -49,6 +54,7 @@ export default defineComponent({
     const clickClose = () => {
       isOpen.value = false;
     }
+    const { year, month, date } = convertStringToDate('2022-02-11')
     return {
       isOpen,
       viewDate,
