@@ -23,13 +23,14 @@
 </template>
 
 <script lang="ts" scoped>
-import { ref, defineComponent } from 'vue'
+import { ref, defineComponent, onMounted } from 'vue'
 import { BodyLayout } from '@/components/atoms/Layout'
 import { CalendarHeader } from '@/components/organisms/CalendarHeader'
 import { CalendarInput } from '@/components/organisms/CalendarInput'
 import { MonthlyCalendar } from './organisms/MonthlyCalendar'
 import { convertStringToDate } from '~/util/date' // 必要ないかも
 import { addMonths } from 'date-fns'
+import { useShiftStore } from '~/store/shifts'
 
 export default defineComponent({
   components: {
@@ -39,6 +40,7 @@ export default defineComponent({
     MonthlyCalendar,
   },
   setup() {
+    const main = useShiftStore()
     const currentDate = new Date();
     const viewDate = ref<Date>(new Date());
     const isOpen = ref<Boolean>(false);
@@ -54,6 +56,9 @@ export default defineComponent({
     const clickClose = () => {
       isOpen.value = false;
     }
+    onMounted(() => {
+      main.getAllMemberShifts();
+    });
     const { year, month, date } = convertStringToDate('2022-02-11')
     return {
       isOpen,

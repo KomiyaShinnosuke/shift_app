@@ -20,10 +20,12 @@ export const useShiftStore = defineStore("shifts", {
   },
   actions: {
     getAllMemberShifts(companyId: number, shiftId: number) {
-      client.get(`http://0.0.0.0:8000/companies/${companyId}/shifts/${shiftId}`)
-        .then((data: { shifts: SHIFT[], limitDate: string }) => {
-          this.shifts = data.shifts;
-          this.limitDate = data.limitDate;
+      // client.get(`http://0.0.0.0:8000/companies/${companyId}/shifts/${shiftId}`)
+      client.get('http://0.0.0.0:3001/shifts')
+        .then((data: { data: { shifts: SHIFT[], limitDate: string } }) => {
+          const response = data.data;
+          this.shifts = response.shifts;
+          this.limitDate = response.limitDate;
         });
     },
   },
