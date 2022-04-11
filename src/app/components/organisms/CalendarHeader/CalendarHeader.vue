@@ -10,18 +10,18 @@
       <v-btn class="today" @click="handleClickToday">今日</v-btn>
       <Icon @handleClick="handleClickBefore" icon="mdi-menu-left" />
         <div class="label">
-          <span v-if="isMonthSelected">{{ currentMonth }}月</span>
-          <span v-if="isWeekSelected">{{ startWeek }} 〜 {{ endWeek }}</span>
+          <span v-if="routeName === 'MonthlyCalendar'">{{ currentMonth }}月</span>
+          <span v-if="routeName === 'WeeklyCalendar'">{{ startWeek }} 〜 {{ endWeek }}</span>
         </div>
       <Icon class="right" @handleClick="handleClickNext" icon="mdi-menu-right" />
     </section>
-    <section>シフト提出締切日: </section>
+    <section class="limit-date">シフト提出締切日: {{ limitDate }}</section>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { getMonth, startOfWeek, endOfWeek, getDate, getDay } from 'date-fns'
 import { DAY_OF_WEEK_STR } from '~/static/calendar'
 import { Button } from '@/components/atoms/Button'
@@ -31,9 +31,11 @@ export default defineComponent({
   components: { Button, Icon },
   props: {
     type: { type: String, default: 'monthly' },
+    limitDate: { type: String, default: null },
     viewDate: { type: Date, default: null },
   },
   setup(props, context) {
+    const route = useRoute();
     const router = useRouter();
     const currentMonth = computed(() => {
       return getMonth(props.viewDate) + 1
@@ -46,6 +48,7 @@ export default defineComponent({
       const date: Date = endOfWeek(props.viewDate)
       return `${getMonth(date) + 1}月${getDate(date)}日(${DAY_OF_WEEK_STR[getDay(date)]})`
     })
+    const routeName = computed(() => { return route.name })
     const handleClickBefore = () => {
       context.emit('clickChangeDate', -1)
     };
@@ -63,6 +66,7 @@ export default defineComponent({
       currentMonth,
       startWeek,
       endWeek,
+      routeName,
       handleClickBefore,
       handleClickNext,
       handleClickToday,
@@ -92,6 +96,9 @@ export default defineComponent({
     .label {
       margin: 0 24px;
     }
+  }
+  .limit-date {
+    color: #C54949;
   }
 }
 </style>

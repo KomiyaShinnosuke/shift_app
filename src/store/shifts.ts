@@ -9,6 +9,16 @@ type SHIFT = {
   comment: string;
 };
 
+type MY_SHIFT = {
+  date: Date;
+  startTime: string;
+  endTime: string;
+  isRest: boolean;
+  isFree: boolean;
+  comment: string;
+  // シフトパターンのkeyを要検討
+};
+
 export const useShiftStore = defineStore("shifts", {
   state: () => {
     return {
@@ -16,6 +26,7 @@ export const useShiftStore = defineStore("shifts", {
       endDate: '', // "2022-03-20"
       limitDate: '', // "2022-03-01"
       shifts: [] as SHIFT[],
+      myShift: [] as MY_SHIFT[],
     };
   },
   actions: {
