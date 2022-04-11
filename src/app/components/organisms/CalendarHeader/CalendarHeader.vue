@@ -1,9 +1,9 @@
 <template>
   <div class="calendar-header">
     <section class="view-mode-selector">
-      <router-link class="selector" :class="{ selected: isDateSelected }" to="/login">日</router-link>
-      <router-link class="selector" :class="{ selected: isWeekSelected }" :to="{ name: 'WeeklyCalendar' }">週</router-link>
-      <router-link class="selector" :class="{ selected: isMonthSelected }" :to="{ name: 'MonthlyCalendar' }">月</router-link>
+      <v-btn  @click="handleClickViewMode('daily')">日</v-btn>
+      <v-btn  @click="handleClickViewMode('weekly')">週</v-btn>
+      <v-btn  @click="handleClickViewMode('monthly')">月</v-btn>
     </section>
     <section class="date-change">
       <!-- TODO: buttonに切り出す -->
@@ -21,26 +21,20 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { getMonth, startOfWeek, endOfWeek, getDate, getDay } from 'date-fns'
 import { DAY_OF_WEEK_STR } from '~/static/calendar'
+import { Button } from '@/components/atoms/Button'
 import { Icon } from '@/components/atoms/Icon'
 
 export default defineComponent({
-  components: { Icon },
+  components: { Button, Icon },
   props: {
     type: { type: String, default: 'monthly' },
     viewDate: { type: Date, default: null },
   },
   setup(props, context) {
-    const isDateSelected = computed(() => {
-      return props.type === 'dayly'
-    })
-    const isWeekSelected = computed(() => {
-      return props.type === 'weekly'
-    })
-    const isMonthSelected = computed(() => {
-      return props.type === 'monthly'
-    })
+    const router = useRouter();
     const currentMonth = computed(() => {
       return getMonth(props.viewDate) + 1
     })
@@ -60,17 +54,19 @@ export default defineComponent({
     };
     const handleClickToday = () => {
       context.emit('clickToday')
+    };
+    const handleClickViewMode = (viewMode: string) => {
+      const upperViewMode = viewMode.charAt(0).toUpperCase() + viewMode.slice(1);
+      router.push({ name: `${upperViewMode}Calendar` })
     }
     return {
-      isDateSelected,
-      isWeekSelected,
-      isMonthSelected,
       currentMonth,
       startWeek,
       endWeek,
       handleClickBefore,
       handleClickNext,
       handleClickToday,
+      handleClickViewMode,
     }
   },
 })
@@ -84,24 +80,6 @@ export default defineComponent({
   height: 60px;
   justify-content: space-between;
   padding: 0 40px;
-  .view-mode-selector {
-    .selector {
-      border-color: #989494;
-      border-radius: 1px;
-      border-width: 1px;
-      border-style: solid;
-      color: black;
-      display: inline-block;
-      text-decoration: none;
-      width: 24px;
-      &:hover {
-        background-color: #EAB5B5;
-      }
-      &.selected {
-        background-color: #E96B6B;
-      }
-    }
-  }
   .date-change {
     display: flex;
     .today {
