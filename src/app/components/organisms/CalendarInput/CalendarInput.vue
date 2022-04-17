@@ -5,8 +5,8 @@
       <v-icon @click="handleClickClose">mdi-close</v-icon>
     </header>
     <main class="body">
-      <div class="each-date" v-for="i in [...Array(30)].map((_, i) => i)">
-        <div class="date">{{ i+1 }}日（月）</div>
+      <div class="each-date" v-for="shift in myShiftObjToArr">
+        <div class="date">{{ shift.dateKey.getDate() }}日（{{ DAY_OF_WEEK_STR[shift.dateKey.getDay()] }}）</div>
         <div>
           <div class="input-time">
             開始時刻<Datepicker class="input" :minutesIncrement="15" v-model="time" timePicker />〜
@@ -32,7 +32,12 @@ import { ref, reactive, defineComponent, computed } from 'vue'
 import { Checkbox } from '@/components/atoms/Checkbox'
 import { InputWithLabel2 } from '@/components/atoms/Input'
 import { TextWithIcon }  from '@/components/molecules/TextWithIcon'
+import { DAY_OF_WEEK_STR } from '~/static/calendar'
 import Datepicker from 'vue3-date-time-picker';
+import {
+  getDay,
+  getDate,
+} from 'date-fns'
 import 'vue3-date-time-picker/dist/main.css'
 
 export default defineComponent({
@@ -67,16 +72,27 @@ export default defineComponent({
       hours: new Date().getHours(),
       minutes: new Date().getMinutes()
     });
-    const inputDates = computed(() => {
-      return Object.keys(props.myShift).map(date => new Date(date))
+    const myShiftObjToArr = computed(() => {
+      const arrMyShift = Object.keys(props.myShift).map((dateKey) => {
+        return {
+          dateKey: new Date(dateKey),
+          ...props.myShift[dateKey]
+        }
+      })
+      return arrMyShift.sort(function(a, b) {
+        return (a.dateKey > b.dateKey) ? 1 : -1;
+      })
     })
     return {
+      DAY_OF_WEEK_STR,
+      getDay,
+      getDate,
       openComment,
       handleClickClose,
       handleClickComment,
       handleInput,
       time,
-      inputDates,
+      myShiftObjToArr,
     }
   },
 })
