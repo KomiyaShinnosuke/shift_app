@@ -1,47 +1,28 @@
 {
+  "shifts": {
     "shifts": {
-      "shifts": {
-        "2022-3-13": [
-          {
-            "userId": 2,
-            "userName": "小宮慎ノ介",
-            "color": "#000080",
-            "startTime": "10:00:00",
-            "endTime": "12:00:00",
-            "type": "ホール",
-            "comment": "hoge"
-          },
-          {
-            "userId": 3,
-            "userName": "小宮慎ノ介",
-            "color": "#000080",
-            "startTime": "10:00:00",
-            "endTime": "12:00:00",
-            "type": "キッチン",
-            "comment": "fuga"
-          }
-        ],
-        "2022-3-14": [
-          {
-            "userId": 2,
-            "userName": "小宮慎ノ介",
-            "color": "#000080",
-            "startTime": "10:00:00",
-            "endTime": "12:00:00",
-            "type": "ホール",
-            "comment": "hoge"
-          },
-          {
-            "userId": 3,
-            "userName": "小宮慎ノ介",
-            "color": "#000080",
-            "startTime": "10:00:00",
-            "endTime": "12:00:00",
-            "type": "キッチン",
-            "comment": "fuga"
-          }
-        ]
+      "2022-4-17": {
+        "startTime": "10:00:00",
+        "endTime": "12:00:00",
+        "isFree": false,
+        "isRest": false,
+        "comment": "hoge"
       },
-      "limitDate": "2022-01-01"
-    }
+      "2022-4-18": {
+        "startTime": "10:00:00",
+        "endTime": "16:00:00",
+        "isFree": false,
+        "isRest": false,
+        "comment": "hoge"
+      },
+      "2022-4-19": {
+        "startTime": null,
+        "endTime": null,
+        "isFree": true,
+        "isRest": false,
+        "comment": null
+      }
+    },
+    "limitDate": "2022-01-01"
+  }
 }

@@ -8,10 +8,6 @@
         @clickChangeDate="handleChangeViewDate"
         @clickToday="handleClickToday"
       />
-      <CalendarInput
-        :isOpen="isOpen"
-        @handleClose="clickClose"
-      />
     </template>
     <template v-slot:contents>
       <MonthlyCalendar
@@ -20,6 +16,15 @@
       />
     </template>
   </BodyLayout>
+  <teleport to="#app">
+    <div v-if="isOpen" class="modal">
+      <CalendarInput
+        :isOpen="isOpen"
+        :myShift="myShift"
+        @handleClose="clickClose"
+      />
+    </div>
+  </teleport>
 </template>
 
 <script lang="ts" scoped>
@@ -43,8 +48,11 @@ export default defineComponent({
     const currentDate = new Date();
     const viewDate = ref<Date>(new Date());
     const isOpen = ref<Boolean>(false);
+    const myShift = computed(() => {
+      return shiftStore.myShift;
+    })
     const limitDate = computed(() => {
-      return shiftStore.limitDate
+      return shiftStore.limitDate;
     })
     const handleChangeViewDate = (value: number) => {
       viewDate.value = addMonths(viewDate.value, value)
@@ -59,10 +67,11 @@ export default defineComponent({
       isOpen.value = false;
     }
     onMounted(() => {
-      shiftStore.getAllMemberShifts();
+      shiftStore.getMyShift();
     });
     return {
       isOpen,
+      myShift,
       limitDate,
       viewDate,
       clickClose,
@@ -77,5 +86,19 @@ export default defineComponent({
 <style scoped lang="scss">
 .monthly-calendar-page {
 
+}
+.modal {
+  align-items: center;
+  background: rgba(0,0,0,.35);
+  display: flex;
+  justify-content: space-around;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  :first-child {
+    background: #434242;
+    color: white;
+  }
 }
 </style>

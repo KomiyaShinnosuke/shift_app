@@ -1,39 +1,36 @@
 <template>
-  <SlotModal class="calendar-input" :isOpen="isOpen">
-    <div>
-      <header class="header">
-        <span class="title">11月シフト希望提出フォーム</span>
-        <v-icon @click="handleClickClose">mdi-close</v-icon>
-      </header>
-      <main class="body">
-        <div class="each-date" v-for="i in [...Array(30)].map((_, i) => i)">
-          <div class="date">{{ i+1 }}日（月）</div>
-          <div>
-            <div class="input-time">
-              開始時刻<Datepicker class="input" :minutesIncrement="15" v-model="time" timePicker />〜
-              終了時刻<Datepicker class="input" :minutesIncrement="15" v-model="time" timePicker />
-            </div>
-            <div class="option-selector">
-              <Checkbox color="secondary" label="休み" />
-              <Checkbox color="secondary" label="free" />
-              <TextWithIcon @click="handleClickComment" class="comment" icon="mdi-plus" text="コメント追加" />
-            </div>
-            <div v-if="openComment" class="comment-area"><v-textarea /></div>
+  <div class="calendar-input">
+    <header class="header">
+      <span class="title">シフト希望提出フォーム</span>
+      <v-icon @click="handleClickClose">mdi-close</v-icon>
+    </header>
+    <main class="body">
+      <div class="each-date" v-for="i in [...Array(30)].map((_, i) => i)">
+        <div class="date">{{ i+1 }}日（月）</div>
+        <div>
+          <div class="input-time">
+            開始時刻<Datepicker class="input" :minutesIncrement="15" v-model="time" timePicker />〜
+            終了時刻<Datepicker class="input" :minutesIncrement="15" v-model="time" timePicker />
           </div>
+          <div class="option-selector">
+            <Checkbox color="secondary" label="休み" />
+            <Checkbox color="secondary" label="free" />
+            <TextWithIcon @click="handleClickComment" class="comment" icon="mdi-plus" text="コメント追加" />
+          </div>
+          <div v-if="openComment" class="comment-area"><v-textarea /></div>
         </div>
-      </main>
-      <footer class="footer">
-        <v-btn color="blue">シフト送信</v-btn>
-      </footer>
-    </div>
-  </SlotModal>
+      </div>
+    </main>
+    <footer class="footer">
+      <v-btn color="blue">シフト送信</v-btn>
+    </footer>
+  </div>
 </template>
 
 <script lang="ts">
-import { ref, reactive, defineComponent } from 'vue'
+import { ref, reactive, defineComponent, computed } from 'vue'
 import { Checkbox } from '@/components/atoms/Checkbox'
 import { InputWithLabel2 } from '@/components/atoms/Input'
-import { SlotModal } from '@/components/atoms/Modal'
 import { TextWithIcon }  from '@/components/molecules/TextWithIcon'
 import Datepicker from 'vue3-date-time-picker';
 import 'vue3-date-time-picker/dist/main.css'
@@ -42,12 +39,12 @@ export default defineComponent({
   components: {
     Checkbox,
     InputWithLabel2,
-    SlotModal,
     TextWithIcon,
     Datepicker,
   },
   props: {
     isOpen: { type: Boolean, default: false },
+    myShift: { type: Object, default: {} },
   },
   setup(props, context) {
     const openComment = ref<boolean>(false);
@@ -70,12 +67,16 @@ export default defineComponent({
       hours: new Date().getHours(),
       minutes: new Date().getMinutes()
     });
+    const inputDates = computed(() => {
+      return Object.keys(props.myShift).map(date => new Date(date))
+    })
     return {
       openComment,
       handleClickClose,
       handleClickComment,
       handleInput,
       time,
+      inputDates,
     }
   },
 })
