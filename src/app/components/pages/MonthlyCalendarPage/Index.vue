@@ -22,6 +22,8 @@
         :isOpen="isOpen"
         :myShift="myShift"
         @handleClose="clickClose"
+        @inputStartTime="handleInputStartTime"
+        @inputEndTime="handleInputEndTime"
       />
     </div>
   </teleport>
@@ -66,6 +68,12 @@ export default defineComponent({
     const clickClose = () => {
       isOpen.value = false;
     }
+    const handleInputStartTime = (inputTime: Object, key: string) => {
+      shiftStore.inputStartTime(inputTime, key);
+    }
+    const handleInputEndTime = (inputTime: Object, key: string) => {
+      shiftStore.inputEndTime(inputTime, key);
+    }
     onMounted(() => {
       shiftStore.getMyShift();
     });
@@ -78,6 +86,9 @@ export default defineComponent({
       handleChangeViewDate,
       handleClickToday,
       handleClickOpen,
+      handleInputStartTime,
+      handleInputEndTime,
+
     }
   },
 })

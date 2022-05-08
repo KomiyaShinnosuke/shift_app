@@ -28,5 +28,11 @@ export const useShiftStore = defineStore("shifts", {
           this.limitDate = response.limitDate;
         });
     },
+    inputStartTime(time: { hours: string, minutes: string }, key: string) {
+      this.myShift[key].startTime = `${time.hours}:${time.minutes}`;
+    },
+    inputEndTime(time: { hours: string, minutes: string }, key: string) {
+      this.myShift[key].endTime = `${time.hours}:${time.minutes}`;
+    }
   },
 });

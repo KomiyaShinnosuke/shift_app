@@ -9,8 +9,8 @@
         <div class="date">{{ shift.dateKey.getDate() }}日（{{ DAY_OF_WEEK_STR[shift.dateKey.getDay()] }}）</div>
         <div>
           <div class="input-time">
-            開始時刻<Datepicker class="input" :minutesIncrement="15" v-model="time" timePicker />〜
-            終了時刻<Datepicker class="input" :minutesIncrement="15" v-model="time" timePicker />
+            開始時刻<Datepicker class="input" :minutesIncrement="15" v-model="shift.startTime" @update:modelValue="handleInputStartTime($event, shift.originDateKey)" timePicker />〜
+            終了時刻<Datepicker class="input" :minutesIncrement="15" v-model="shift.endTime" @update:modelValue="handleInputEndTime($event, shift.originDateKey)" timePicker />
           </div>
           <div class="option-selector">
             <Checkbox color="secondary" label="休み" />
@@ -53,30 +53,33 @@ export default defineComponent({
   },
   setup(props, context) {
     const openComment = ref<boolean>(false);
-    const shiftInput = reactive<{ start: string, end: string }>({
-      start: "",
-      end: "",
-    })
     const handleClickClose = () => {
       context.emit('handleClose');
     }
-    // 何故かこのイベントが発火しないのとモーダル表示が遅い
     const handleClickComment = () => {
       const open = true
       openComment.value = open
     }
-    const handleInput = (data: string) => {
-      shiftInput.start = data
+    const handleInputStartTime = (data: { hours: string, minutes: string }, key: string) => {
+      context.emit('inputStartTime', { 'hours': data.hours, 'minutes': data.minutes }, key)
     };
-    const time = ref({
-      hours: new Date().getHours(),
-      minutes: new Date().getMinutes()
-    });
+    const handleInputEndTime = (data: { hours: string, minutes: string }, key: string) => {
+      context.emit('inputEndTime', { 'hours': data.hours, 'minutes': data.minutes }, key)
+    };
     const myShiftObjToArr = computed(() => {
       const arrMyShift = Object.keys(props.myShift).map((dateKey) => {
         return {
           dateKey: new Date(dateKey),
-          ...props.myShift[dateKey]
+          originDateKey: dateKey,
+          ...props.myShift[dateKey],
+          startTime: {
+            "hours": props.myShift[dateKey].startTime ? props.myShift[dateKey].startTime.substr(0, props.myShift[dateKey].startTime.indexOf(':')) : null,
+            "minutes": props.myShift[dateKey].startTime ? props.myShift[dateKey].startTime.substr(props.myShift[dateKey].startTime.indexOf(':') + 1) : null,
+          },
+          endTime: {
+            "hours": props.myShift[dateKey].endTime ? props.myShift[dateKey].endTime.substr(0, props.myShift[dateKey].endTime.indexOf(':')) : null,
+            "minutes": props.myShift[dateKey].endTime ? props.myShift[dateKey].endTime.substr(props.myShift[dateKey].endTime.indexOf(':') + 1) : null,
+          },
         }
       })
       return arrMyShift.sort(function(a, b) {
@@ -90,8 +93,8 @@ export default defineComponent({
       openComment,
       handleClickClose,
       handleClickComment,
-      handleInput,
-      time,
+      handleInputStartTime,
+      handleInputEndTime,
       myShiftObjToArr,
     }
   },

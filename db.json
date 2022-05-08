@@ -2,15 +2,15 @@
   "shifts": {
     "shifts": {
       "2022-4-17": {
-        "startTime": "10:00:00",
-        "endTime": "12:00:00",
+        "startTime": "10:00",
+        "endTime": "12:00",
         "isFree": false,
         "isRest": false,
         "comment": "hoge"
       },
       "2022-4-18": {
-        "startTime": "10:00:00",
-        "endTime": "16:00:00",
+        "startTime": "10:00",
+        "endTime": "16:00",
         "isFree": false,
         "isRest": false,
         "comment": "hoge"
