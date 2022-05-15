@@ -31,11 +31,12 @@ import { useRouter } from 'vue-router'
 import { Icon } from '@/components/atoms/Icon'
 import { InputWithLabel } from '@/components/atoms/Input'
 import { PrimaryButton } from '@/components/atoms/Button'
-import client from '~/core/api'
+import { useMeStore } from '~/store/me'
 
 export default defineComponent({
   components: { Icon, InputWithLabel, PrimaryButton },
   setup() {
+    const meStore = useMeStore()
     const router = useRouter()
     const email = ref<string>('');
     const password = ref<string>('');
@@ -57,18 +58,18 @@ export default defineComponent({
     const initializeRouter = () => {
       router.push({ name: 'MonthlyCalendar' })
     }
-    const onClick = () => {
+    const onClick = async() => {
       showError.value = false;
       const params = new URLSearchParams();
       params.append('username', email.value);
       params.append('password', password.value);
-      client.post('http://0.0.0.0:8000/token', params)
-        .then(_ => {
-          initializeRouter()
+      await meStore.postLoginInfo(params)
+        .then(() => {
+          initializeRouter();
         })
-        .catch(_ => {
+        .catch(() => {
           showError.value = true;
-        })
+        });
     }
     const handleClickError = () => {
       showError.value = false;
