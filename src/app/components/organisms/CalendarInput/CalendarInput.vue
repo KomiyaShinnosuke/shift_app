@@ -13,8 +13,20 @@
             終了時刻<Datepicker class="input" :minutesIncrement="15" v-model="shift.endTime" @update:modelValue="handleInputEndTime($event, shift.originDateKey)" timePicker />
           </div>
           <div class="option-selector">
-            <Checkbox color="secondary" label="休み" />
-            <Checkbox color="secondary" label="free" />
+            <Checkbox
+              :checked="shift.isRest"
+              :dateKey="shift.originDateKey"
+              color="secondary"
+              label="休み"
+              @click="handleClickRest"
+            />
+            <Checkbox
+              :checked="shift.isFree"
+              :dateKey="shift.originDateKey"
+              color="secondary"
+              label="free"
+              @click="handleClickFree"
+            />
             <TextWithIcon @click="handleClickComment" class="comment" icon="mdi-plus" text="コメント追加" />
           </div>
           <div v-if="openComment" class="comment-area"><v-textarea /></div>
@@ -66,6 +78,14 @@ export default defineComponent({
     const handleInputEndTime = (data: { hours: string, minutes: string }, key: string) => {
       context.emit('inputEndTime', { 'hours': data.hours, 'minutes': data.minutes }, key)
     };
+    const handleClickRest = (checked: boolean, key: string) => {
+      if (typeof checked !== 'boolean') { return }
+      context.emit('clickRest', checked, key);
+    };
+    const handleClickFree = (checked: boolean, key: string) => {
+      if (typeof checked !== 'boolean') { return }
+      context.emit('clickRest', checked, key);
+    };
     const myShiftObjToArr = computed(() => {
       const arrMyShift = Object.keys(props.myShift).map((dateKey) => {
         return {
@@ -95,6 +115,8 @@ export default defineComponent({
       handleClickComment,
       handleInputStartTime,
       handleInputEndTime,
+      handleClickRest,
+      handleClickFree,
       myShiftObjToArr,
     }
   },

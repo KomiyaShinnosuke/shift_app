@@ -1,9 +1,11 @@
 <template>
   <div class="checkbox">
     <v-checkbox
+      v-model="value"
       class="inner"
       :color="color"
       :label="label"
+      @change="handleChange"
     />
   </div>
 </template>
@@ -12,13 +14,25 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+  data() {
+    return {
+      value: false,
+    }
+  },
   props: {
+    checked: { type: Boolean, default: false },
     color: { type: String, default: '' },
+    dateKey: { type: String, default: '' },
     label: { type: String, default: '' },
   },
-  emits: {
-    click: null,
+  methods: {
+    handleChange() {
+      this.$emit('click', !this.checked, this.dateKey)
+    },
   },
+  mounted() {
+    this.value = this.checked
+  }
 });
 </script>
 

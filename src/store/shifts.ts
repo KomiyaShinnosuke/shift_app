@@ -33,6 +33,12 @@ export const useShiftStore = defineStore("shifts", {
     },
     inputEndTime(time: { hours: string, minutes: string }, key: string) {
       this.myShift[key].endTime = `${time.hours}:${time.minutes}`;
-    }
+    },
+    clickRest(checked: boolean, key: string) {
+      this.myShift[key].isRest = checked;
+    },
+    clickFree(checked: boolean, key: string) {
+      this.myShift[key].isFree = checked;
+    },
   },
 });

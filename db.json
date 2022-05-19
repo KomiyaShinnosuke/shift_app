@@ -5,7 +5,7 @@
         "startTime": "10:00",
         "endTime": "12:00",
         "isFree": false,
-        "isRest": false,
+        "isRest": true,
         "comment": "hoge"
       },
       "2022-4-18": {

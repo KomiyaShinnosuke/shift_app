@@ -21,9 +21,11 @@
       <CalendarInput
         :isOpen="isOpen"
         :myShift="myShift"
-        @handleClose="clickClose"
+        @handleClose="handleClickClose"
         @inputStartTime="handleInputStartTime"
         @inputEndTime="handleInputEndTime"
+        @clickRest="handleClickRest"
+        @clickFree="handleClickFree"
       />
     </div>
   </teleport>
@@ -65,7 +67,7 @@ export default defineComponent({
     const handleClickOpen = () => {
       isOpen.value = true;
     }
-    const clickClose = () => {
+    const handleClickClose = () => {
       isOpen.value = false;
     }
     const handleInputStartTime = (inputTime: Object, key: string) => {
@@ -73,6 +75,12 @@ export default defineComponent({
     }
     const handleInputEndTime = (inputTime: Object, key: string) => {
       shiftStore.inputEndTime(inputTime, key);
+    }
+    const handleClickRest = (checked: boolean, key: string) => {
+      shiftStore.clickRest(checked, key);
+    }
+    const handleClickFree = (checked: boolean, key: string) => {
+      shiftStore.clickFree(checked, key);
     }
     onMounted(() => {
       shiftStore.getMyShift();
@@ -82,12 +90,14 @@ export default defineComponent({
       myShift,
       limitDate,
       viewDate,
-      clickClose,
       handleChangeViewDate,
       handleClickToday,
       handleClickOpen,
+      handleClickClose,
       handleInputStartTime,
       handleInputEndTime,
+      handleClickRest,
+      handleClickFree,
 
     }
   },
