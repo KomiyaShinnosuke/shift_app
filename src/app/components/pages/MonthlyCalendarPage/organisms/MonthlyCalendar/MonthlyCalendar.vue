@@ -5,16 +5,15 @@
         {{ youbi }}
       </div>
     </div>
-    <div v-for="(week, index) in getCalendar()" :key="index" class="row">
-      <div v-for="(day, index) in week" :key="index" class="cell">
-        <span>{{ day.date }}</span>
-      </div>
-    </div>
+    <CalendarCell
+      :calendar="getCalendar()"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
+import { CalendarCell } from '../CalendarCell'
 import {
   endOfMonth,
   startOfMonth,
@@ -27,7 +26,9 @@ import { DAY_OF_WEEK_STR } from '~/static/calendar'
 
 export default defineComponent({
   name: 'MonthlyCalendar',
+  components: { CalendarCell },
   props: {
+    shift: { type: Object, required: true },
     viewDate: { type: Date, required: true }
   },
   setup(props) {
@@ -85,20 +86,6 @@ export default defineComponent({
       &:last-child {
         color: #7A9CC3;
       }
-    }
-  }
-  .row {
-    display: flex;
-    justify-content: space-between;
-    .cell {
-      background-color: #F9F8F8;
-      border-color: #989494;
-      border-radius: 1px;
-      border-width: 1px;
-      border-style: solid;
-      height: 100px;
-      margin: -1px;
-      width: 150px;
     }
   }
 }
