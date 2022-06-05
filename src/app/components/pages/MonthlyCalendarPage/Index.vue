@@ -11,6 +11,7 @@
     </template>
     <template v-slot:contents>
       <MonthlyCalendar
+        :shift="myShift"
         :viewDate="viewDate"
         @click="handleClickOpen"
       />

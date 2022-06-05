@@ -5,9 +5,14 @@
         {{ youbi }}
       </div>
     </div>
-    <CalendarCell
-      :calendar="getCalendar()"
-    />
+    <div v-for="(week, index) in getCalendar()" :key="index" class="row">
+      <div v-for="(day, index) in week" :key="index" class="cell">
+        <CalendarCell
+          :date="day.date"
+          :shift="shift"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,6 +91,21 @@ export default defineComponent({
       &:last-child {
         color: #7A9CC3;
       }
+    }
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    .cell {
+      background-color: #F9F8F8;
+      border-color: #989494;
+      border-radius: 1px;
+      border-width: 1px;
+      border-style: solid;
+      display: grid;
+      height: 100px;
+      margin: -1px;
+      width: 150px;
     }
   }
 }
