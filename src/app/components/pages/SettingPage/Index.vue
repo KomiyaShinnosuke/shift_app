@@ -4,16 +4,17 @@
       <div>
         <div class="top-bar">全般</div>
         <div class="sub-bars">
-          <p class="sub-bar">店舗情報の設定</p>
-          <p class="sub-bar">自動調整の設定</p>
-          <p class="sub-bar">詳細設定</p>
+          <p class="sub-bar" @click="handleScrollWindow('section1')">店舗情報の設定</p>
+          <p class="sub-bar" @click="handleScrollWindow('section2')">シフト自動調整機能の設定</p>
+          <p class="sub-bar" @click="handleScrollWindow('section3')">シフト人数の設定</p>
+          <p class="sub-bar" @click="handleScrollWindow('section4')">クラス設定</p>
         </div>
       </div>
       <div>
-        <div class="top-bar">メンバーの設定</div>
+        <div class="top-bar" @click="handleScrollWindow('section5')">メンバーの設定</div>
         <div class="sub-bars">
           <p class="sub-bar">メンバーの検索</p>
-          <p class="sub-bar">メンバーの新規追加</p>
+          <p class="sub-bar" @click="handleScrollWindow('section6')">メンバーの新規追加</p>
           <p class="sub-bar">メンバー1</p>
           <p class="sub-bar">メンバー2</p>
           <p class="sub-bar">メンバー3</p>
@@ -25,30 +26,36 @@
     </section>
     <section class="contents-area">
       <h1 class="subject">全般</h1>
-      <div class="content">
+      <div id="section1" class="content">
         <p class="title">店舗情報の設定</p>
         <p>店舗名←【】いらないのでは</p>
         <p>住所</p>
         <p>電話番号</p>
       </div>
-      <div class="content">
+      <div id="section2" class="content">
         <p class="title">シフト自動調整機能の設定</p>
         <p>店舗名</p>
         <p>住所</p>
         <p>電話番号</p>
       </div>
-       <div class="content">
+      <div id="section3" class="content">
+        <p class="title">シフト人数の設定</p>
+        <p>店舗名</p>
+        <p>住所</p>
+        <p>電話番号</p>
+      </div>
+      <div id="section4" class="content">
         <p class="title">クラス設定</p>
         <p>店舗名</p>
         <p>住所</p>
         <p>電話番号</p>
       </div>
       <h1 class="subject">メンバーの設定</h1>
-      <div class="content">
+      <div id="section5" class="content">
         <p class="title">メンバーの新規追加</p>
         中身のUIどうします？
       </div>
-      <div class="content">
+      <div id="section6" class="content">
         <p class="title">メンバー1</p>
         <p>名前</p>
         <p>メールアドレス</p>
@@ -57,7 +64,7 @@
         <p>カラー</p>
         <p>有効</p>
       </div>
-       <div class="content" id="メンバー2">
+       <div id="section7" class="content">
         <p class="title">メンバー2</p>
         <p>名前</p>
         <p>メールアドレス</p>
@@ -72,41 +79,22 @@
 
 <script lang="ts" scoped>
 import { defineComponent, ref } from 'vue';
-import { InputWithLabel } from '@/components/atoms/Input'
-import { PrimaryButton } from '@/components/atoms/Button'
 import client from '~/core/api'
 
 export default defineComponent({
-  // components: { InputWithLabel, PrimaryButton },
-  // setup() {
-  //   const email = ref<string>('');
-  //   const password = ref<string>('');
-  //   const handleInput = (data: string, type: string) => {
-  //     switch(type) {
-  //       case 'email': {
-  //         email.value = data
-  //         break
-  //       }
-  //       case 'password': {
-  //         password.value = data
-  //         break
-  //       }
-  //       default:
-  //         return
-  //     }
-  //   };
-  //   const onClick = () => {
-  //     const params = new URLSearchParams();
-  //     params.append('username', 'test@example.com');
-  //     params.append('password', 'test');
-  //     client.post('http://0.0.0.0:8000/token', params)
-  //       .then(res => console.log(res))
-  //   }
-  //   return {
-  //     handleInput,
-  //     onClick,
-  //   };
-  // },
+  setup() {
+    const handleScrollWindow = (elem: string) => {
+      const element = document.getElementById(elem);
+      const rect = element.getBoundingClientRect();
+      const headerHeight = 70;
+      const elemtop = rect.top + window.pageYOffset - headerHeight;
+      console.log(elemtop)
+      document.documentElement.scrollTop = elemtop;
+    };
+    return {
+      handleScrollWindow,
+    };
+  },
 })
 </script>
 
