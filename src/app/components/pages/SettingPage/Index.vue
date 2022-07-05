@@ -103,9 +103,7 @@ export default defineComponent({
   display: flex;
   padding: 20px;
   .navigation-area {
-    :not(:first-child) {
-      margin-top: 16px;
-    }
+    position: fixed;
     .top-bar {
       background-color: #C4C4C4;
       border-radius: 8px;
@@ -120,14 +118,16 @@ export default defineComponent({
       .sub-bar {
         background-color: #C4C4C4;
         border-radius: 8px;
+        font-size: 12px;
         margin-top: 12px;
         padding: 4px;
+        cursor: pointer;
         width: 160px;
       }
     }
   }
   .contents-area {
-    padding: 0 40px;
+    padding: 0 40px 0 250px;
     text-align: center;
     width: 100%;
     .subject {
@@ -139,6 +139,7 @@ export default defineComponent({
       border-bottom: 1px solid #a9a9a9;
       margin-top: 40px;
       padding: 12px;
+      text-align: left;
       .title {
         font-size: 18px;
         font-weight: bold;
