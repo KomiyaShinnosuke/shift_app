@@ -1,7 +1,6 @@
 <template>
   <div class="weekly-calendar">
     <div class="main">
-      <!-- ここでTableHeaderとTableBodyに分けて配置するほうがいいかも -->
       <Table :columns="calendarHeader" :items="weekDays" />
     </div>
   </div>
@@ -24,47 +23,17 @@ export default defineComponent({
       return startOfWeek(props.viewDate)
     })
     const weekDays = [
-      // {
-      //   name: "komiya",
-      //   shifts: ["10-16", "10-16", "10-16", "10-16", "10-16", "10-16", "10-16"]
-      // },
-      // {
-      //   name: "kohsuke",
-      //   shifts: ["10-16", "10-16", "10-16", "10-16", "10-16", "10-16", "10-16"]
-      // },
-      // {
-      //   name: "machida",
-      //   shifts: ["10-16", "10-16", "10-16", "10-16", "10-16", "10-16", "10-16"]
-      // },
       {
-        name: "komiya",
-        sunday: "10-16",
-        monday: "10-16",
-        tuesday: "10-16",
-        wednesday: "10-16",
-        thursday: "10-16",
-        friday: "10-16",
-        saturday: "10-16",
+        label: "komiya",
+        shifts: ["10-16", "11-16", "12-16", "13-16", "14-16", "15-16", "16-16"]
       },
       {
-        name: "kohsuke",
-        sunday: "10-16",
-        monday: "10-16",
-        tuesday: "10-16",
-        wednesday: "10-16",
-        thursday: "10-16",
-        friday: "10-16",
-        saturday: "10-16",
+        label: "kohsuke",
+        shifts: ["10-16", "10-16", "10-16", "10-16", "10-16", "10-16", "10-16"]
       },
       {
-        name: "machida",
-        sunday: "10-16",
-        monday: "10-16",
-        tuesday: "10-16",
-        wednesday: "10-16",
-        thursday: "10-16",
-        friday: "10-16",
-        saturday: "10-16",
+        label: "machida",
+        shifts: ["10-16", "10-16", "10-16", "10-16", "10-16", "10-16", "10-16"]
       },
     ]
     const calendarHeader = computed(() => {
