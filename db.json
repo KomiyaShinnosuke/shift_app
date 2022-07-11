@@ -1,28 +1,49 @@
 {
   "shifts": {
-    "shifts": {
-      "2022-4-17": {
-        "startTime": "10:00",
-        "endTime": "12:00",
+    "myShifts": [
+      {
+        "date": "2022-4-17",
+        "startTime": {
+          "hours": 10,
+          "minutes": 0
+        },
+        "endTime": {
+          "hours": 16,
+          "minutes": 0
+        },
         "isFree": false,
         "isRest": true,
         "comment": "hoge"
       },
-      "2022-4-18": {
-        "startTime": "10:00",
-        "endTime": "16:00",
+      {
+        "date": "2022-4-18",
+        "startTime": {
+          "hours": 10,
+          "minutes": 0
+        },
+        "endTime": {
+          "hours": 16,
+          "minutes": 0
+        },
         "isFree": false,
         "isRest": false,
         "comment": "hoge"
       },
-      "2022-4-19": {
-        "startTime": null,
-        "endTime": null,
+      {
+        "date": "2022-4-19",
+        "startTime": {
+          "hours": null,
+          "minutes": null
+        },
+        "endTime": {
+          "hours": null,
+          "minutes": null
+        },
         "isFree": true,
         "isRest": false,
         "comment": null
       }
-    },
+    ],
     "limitDate": "2022-01-01"
   }
 }

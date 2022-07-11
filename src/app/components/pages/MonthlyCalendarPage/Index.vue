@@ -11,7 +11,7 @@
     </template>
     <template v-slot:contents>
       <MonthlyCalendar
-        :shift="myShift"
+        :shift="myShifts"
         :viewDate="viewDate"
         @click="handleClickOpen"
       />
@@ -21,7 +21,7 @@
     <div v-if="isOpen" class="modal">
       <CalendarInput
         :isOpen="isOpen"
-        :myShift="myShift"
+        :myShifts="myShifts"
         @handleClose="handleClickClose"
         @inputStartTime="handleInputStartTime"
         @inputEndTime="handleInputEndTime"
@@ -53,8 +53,8 @@ export default defineComponent({
     const currentDate = new Date();
     const viewDate = ref<Date>(new Date());
     const isOpen = ref<Boolean>(false);
-    const myShift = computed(() => {
-      return shiftStore.myShift;
+    const myShifts = computed(() => {
+      return shiftStore.myShifts;
     })
     const limitDate = computed(() => {
       return shiftStore.limitDate;
@@ -88,7 +88,7 @@ export default defineComponent({
     });
     return {
       isOpen,
-      myShift,
+      myShifts,
       limitDate,
       viewDate,
       handleChangeViewDate,

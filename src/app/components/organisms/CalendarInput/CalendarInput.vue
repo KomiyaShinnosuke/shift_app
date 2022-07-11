@@ -5,31 +5,31 @@
       <v-icon @click="handleClickClose">mdi-close</v-icon>
     </header>
     <main class="body">
-      <div class="each-date" v-for="shift in myShiftObjToArr">
-        <div class="date">{{ shift.dateKey.getDate() }}日（{{ DAY_OF_WEEK_STR[shift.dateKey.getDay()] }}）</div>
+      <div class="each-date" v-for="(shift, index) in myShifts">
+        <div class="date">{{ new Date(shift.date).getDate() }}日（{{ DAY_OF_WEEK_STR[new Date(shift.date).getDay()] }}）</div>
         <div>
           <div class="input-time">
-            開始時刻<Datepicker class="input" :minutesIncrement="15" v-model="shift.startTime" @update:modelValue="handleInputStartTime($event, shift.originDateKey)" timePicker />〜
-            終了時刻<Datepicker class="input" :minutesIncrement="15" v-model="shift.endTime" @update:modelValue="handleInputEndTime($event, shift.originDateKey)" timePicker />
+            開始時刻<Datepicker class="input" :minutesIncrement="15" v-model="shift.startTime" @update:modelValue="handleInputStartTime($event, index)" timePicker />〜
+            終了時刻<Datepicker class="input" :minutesIncrement="15" v-model="shift.endTime" @update:modelValue="handleInputEndTime($event, index)" timePicker />
           </div>
           <div class="option-selector">
             <Checkbox
               :checked="shift.isRest"
-              :dateKey="shift.originDateKey"
+              :dateKey="shift.date"
               color="secondary"
               label="休み"
-              @click="handleClickRest"
+              @click="handleClickRest($event, index)"
             />
             <Checkbox
               :checked="shift.isFree"
-              :dateKey="shift.originDateKey"
+              :dateKey="shift.date"
               color="secondary"
               label="free"
-              @click="handleClickFree"
+              @click="handleClickFree($event, index)"
             />
-            <TextWithIcon @click="handleClickComment" class="comment" icon="mdi-plus" text="コメント追加" />
+            <TextWithIcon @click="handleClickComment(shift.date)" class="comment" icon="mdi-plus" text="コメント追加" />
           </div>
-          <div v-if="openComment" class="comment-area"><v-textarea /></div>
+          <div v-if="openComment.dateKey" class="comment-area"><v-textarea /></div>
         </div>
       </div>
     </main>
@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { ref, reactive, defineComponent, computed } from 'vue'
+import { reactive, defineComponent } from 'vue'
 import { Checkbox } from '@/components/atoms/Checkbox'
 import { InputWithLabel2 } from '@/components/atoms/Input'
 import { TextWithIcon }  from '@/components/molecules/TextWithIcon'
@@ -61,63 +61,46 @@ export default defineComponent({
   },
   props: {
     isOpen: { type: Boolean, default: false },
-    myShift: { type: Object, default: {} },
+    myShifts: { type: Array, default: [] },
   },
   setup(props, context) {
-    const openComment = ref<boolean>(false);
+    const openComment = reactive({ dateKey: false });
     const handleClickClose = () => {
       context.emit('handleClose');
     }
-    const handleClickComment = () => {
+    const handleClickComment = (dateKey: string) => {
       const open = true
-      openComment.value = open
-    }
-    const handleInputStartTime = (data: { hours: string, minutes: string }, key: string) => {
-      context.emit('inputStartTime', { 'hours': data.hours, 'minutes': data.minutes }, key)
+      openComment[dateKey].value = open
     };
-    const handleInputEndTime = (data: { hours: string, minutes: string }, key: string) => {
-      context.emit('inputEndTime', { 'hours': data.hours, 'minutes': data.minutes }, key)
+    // onMounted(() => {
+    //   props.myShifts.forEach(())
+    //   openComment[dateKey].value = open
+    // });
+    const handleInputStartTime = (data: { hours: number, minutes: number }, index: number) => {
+      context.emit('inputStartTime', data, index)
     };
-    const handleClickRest = (checked: boolean, key: string) => {
+    const handleInputEndTime = (data: { hours: number, minutes: number }, index: number) => {
+      context.emit('inputEndTime', data, index)
+    };
+    const handleClickRest = (checked: boolean, index: number) => {
       if (typeof checked !== 'boolean') { return }
-      context.emit('clickRest', checked, key);
+      context.emit('clickRest', checked, index);
     };
-    const handleClickFree = (checked: boolean, key: string) => {
+    const handleClickFree = (checked: boolean, index: number) => {
       if (typeof checked !== 'boolean') { return }
-      context.emit('clickRest', checked, key);
+      context.emit('clickFree', checked, index);
     };
-    const myShiftObjToArr = computed(() => {
-      const arrMyShift = Object.keys(props.myShift).map((dateKey) => {
-        return {
-          dateKey: new Date(dateKey),
-          originDateKey: dateKey,
-          ...props.myShift[dateKey],
-          startTime: {
-            "hours": props.myShift[dateKey].startTime ? props.myShift[dateKey].startTime.substr(0, props.myShift[dateKey].startTime.indexOf(':')) : null,
-            "minutes": props.myShift[dateKey].startTime ? props.myShift[dateKey].startTime.substr(props.myShift[dateKey].startTime.indexOf(':') + 1) : null,
-          },
-          endTime: {
-            "hours": props.myShift[dateKey].endTime ? props.myShift[dateKey].endTime.substr(0, props.myShift[dateKey].endTime.indexOf(':')) : null,
-            "minutes": props.myShift[dateKey].endTime ? props.myShift[dateKey].endTime.substr(props.myShift[dateKey].endTime.indexOf(':') + 1) : null,
-          },
-        }
-      })
-      return arrMyShift.sort(function(a, b) {
-        return (a.dateKey > b.dateKey) ? 1 : -1;
-      })
-    })
     return {
       DAY_OF_WEEK_STR,
       getDay,
       getDate,
-      openComment,
       handleClickClose,
       handleClickComment,
       handleInputStartTime,
       handleInputEndTime,
       handleClickRest,
       handleClickFree,
-      myShiftObjToArr,
+      openComment,
     }
   },
 })
