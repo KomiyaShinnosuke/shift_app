@@ -5,9 +5,9 @@
         <div class="top-bar">全般</div>
         <div class="sub-bars">
           <p class="sub-bar" @click="handleScrollWindow('section1')">店舗情報の設定</p>
-          <p class="sub-bar" @click="handleScrollWindow('section2')">シフト自動調整機能の設定</p>
-          <p class="sub-bar" @click="handleScrollWindow('section3')">シフト人数の設定</p>
-          <p class="sub-bar" @click="handleScrollWindow('section4')">クラス設定</p>
+          <p class="sub-bar" @click="handleScrollWindow('section2')">自動調整機能の設定</p>
+          <p class="sub-bar" @click="handleScrollWindow('section3')">シフトパターンの設定</p>
+          <p class="sub-bar" @click="handleScrollWindow('section4')">シフト人数の設定</p>
         </div>
       </div>
       <div>
@@ -28,27 +28,28 @@
       <h1 class="subject">全般</h1>
       <div id="section1" class="content">
         <p class="title">店舗情報の設定</p>
-        <p>店舗名←【】いらないのでは</p>
-        <p>住所</p>
-        <p>電話番号</p>
+        <InputWithLabel2 label="【店舗名】" width="320px" value="aaa" @input="handleInput($event, 'email')" />
+        <InputWithLabel2 label="【住所】" width="320px" value="aaa" @input="handleInput($event, 'email')" />
+        <InputWithLabel2 label="【電話番号】" width="320px" value="aaa" @input="handleInput($event, 'email')" />
+        <InputWithLabel2 label="【営業時間】" width="320px" value="aaa" @input="handleInput($event, 'email')" />
+        <p class="row">【ライセンス数】</p>
+        <p class="row">【有効化アカウント】</p>
       </div>
       <div id="section2" class="content">
-        <p class="title">シフト自動調整機能の設定</p>
-        <p>店舗名</p>
-        <p>住所</p>
-        <p>電話番号</p>
+        <p class="title">自動調整の設定</p>
+        <Checkbox label="hoge" />
+        <Checkbox label="hoge" />
+        <Checkbox label="hoge" />
       </div>
       <div id="section3" class="content">
-        <p class="title">シフト人数の設定</p>
-        <p>店舗名</p>
-        <p>住所</p>
-        <p>電話番号</p>
+        <p class="title">シフトパターンの設定</p>
+        <p class="row"><TextWithIcon icon="mdi-plus" text="シフトパターンの新規作成" /></p>
+        シフトパターンの編集って押したらどうなる？
+        <p class="row">作成済みシフトパターン</p>
       </div>
       <div id="section4" class="content">
-        <p class="title">クラス設定</p>
-        <p>店舗名</p>
-        <p>住所</p>
-        <p>電話番号</p>
+        <p class="title">シフト人数の設定</p>
+        <Table :items="weekDays" />
       </div>
       <h1 class="subject">メンバーの設定</h1>
       <div id="section5" class="content">
@@ -78,21 +79,50 @@
 </template>
 
 <script lang="ts" scoped>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, computed } from 'vue';
+import { Checkbox } from '@/components/atoms/Checkbox'
+import { InputWithLabel2 } from '@/components/atoms/Input'
+import { Table } from '@/components/atoms/Table'
+import { TextWithIcon }  from '@/components/molecules/TextWithIcon'
+
+import { DAY_OF_WEEK_STR } from '~/static/calendar'
 import client from '~/core/api'
 
 export default defineComponent({
+  components: { Checkbox, InputWithLabel2, Table, TextWithIcon },
   setup() {
+    const handleInput = (data: string, type: string) => {
+      console.log(777);
+    };
     const handleScrollWindow = (elem: string) => {
       const element = document.getElementById(elem);
       const rect = element.getBoundingClientRect();
       const headerHeight = 70;
       const elemtop = rect.top + window.pageYOffset - headerHeight;
-      console.log(elemtop)
       document.documentElement.scrollTop = elemtop;
     };
+    const weekDays = [
+      {
+        label: '',
+        shifts: [
+          DAY_OF_WEEK_STR[0],
+          DAY_OF_WEEK_STR[1],
+          DAY_OF_WEEK_STR[2],
+          DAY_OF_WEEK_STR[3],
+          DAY_OF_WEEK_STR[4],
+          DAY_OF_WEEK_STR[5],
+          DAY_OF_WEEK_STR[6],
+        ]
+      },
+      {
+        label: "ホール",
+        shifts: [2, 2, 3, 2, 2, 3, 1]
+      },
+    ]
     return {
+      handleInput,
       handleScrollWindow,
+      weekDays,
     };
   },
 })
@@ -143,6 +173,17 @@ export default defineComponent({
       .title {
         font-size: 18px;
         font-weight: bold;
+      }
+      .basic-form {
+        justify-content: space-between;
+        margin-top: 12px;
+        width: 500px;
+      }
+      .row {
+        margin-top: 12px;
+      }
+      .checkbox {
+        height: 40px;
       }
     }
   }

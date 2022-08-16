@@ -3,6 +3,7 @@
     <v-checkbox
       v-model="value"
       class="inner"
+      hide-details="false"
       :color="color"
       :label="label"
       @change="handleChange"
@@ -38,8 +39,5 @@ export default defineComponent({
 
 <style lang="scss" scoped>
   .checkbox {
-    .inner {
-      --v-input-control-height: auto; // checkboxの謎のCSSに影響されてこのスタイルを当てている
-    }
   }
 </style>
