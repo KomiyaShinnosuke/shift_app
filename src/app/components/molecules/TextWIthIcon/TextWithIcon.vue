@@ -14,7 +14,7 @@ export default defineComponent({
   },
   setup(_, context) {
     const onClick = () => {
-      context.emit('click')
+      context.emit('clickTextWithIcon')
     };
     return {
       onClick,

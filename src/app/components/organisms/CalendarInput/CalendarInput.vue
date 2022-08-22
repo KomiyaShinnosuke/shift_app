@@ -27,7 +27,7 @@
               label="free"
               @click="handleClickFree($event, index)"
             />
-            <TextWithIcon @click="handleClickComment(index)" class="comment" icon="mdi-plus" text="コメント追加" />
+            <TextWithIcon @clickTextWithIcon="handleClickComment(index)" class="comment" icon="mdi-plus" text="コメント追加" />
           </div>
           <div v-if="openComment[index]" class="comment-area"><v-textarea />hoge</div>
         </div>
