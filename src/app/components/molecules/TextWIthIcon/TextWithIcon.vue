@@ -1,5 +1,5 @@
 <template>
-  <div class="text-with-icon">
+  <div class="text-with-icon" @click="onClick">
     <v-icon>{{ icon }}</v-icon>{{ text }}
   </div>
 </template>
@@ -12,9 +12,14 @@ export default defineComponent({
     icon: { type: String, default: '' },
     text: { type: String, default: '' },
   },
-  emits: {
-    click: null,
-  },
+  setup(_, context) {
+    const onClick = () => {
+      context.emit('click')
+    };
+    return {
+      onClick,
+    }
+  }
 });
 </script>
 

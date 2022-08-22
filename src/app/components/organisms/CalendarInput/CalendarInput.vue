@@ -27,9 +27,9 @@
               label="free"
               @click="handleClickFree($event, index)"
             />
-            <TextWithIcon @click="handleClickComment(shift.date)" class="comment" icon="mdi-plus" text="コメント追加" />
+            <TextWithIcon @click="handleClickComment(index)" class="comment" icon="mdi-plus" text="コメント追加" />
           </div>
-          <div v-if="openComment.dateKey" class="comment-area"><v-textarea /></div>
+          <div v-if="openComment[index]" class="comment-area"><v-textarea />hoge</div>
         </div>
       </div>
     </main>
@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { reactive, defineComponent } from 'vue'
+import { ref, defineComponent } from 'vue'
 import { Checkbox } from '@/components/atoms/Checkbox'
 import { InputWithLabel2 } from '@/components/atoms/Input'
 import { TextWithIcon }  from '@/components/molecules/TextWithIcon'
@@ -64,18 +64,17 @@ export default defineComponent({
     myShifts: { type: Array, default: [] },
   },
   setup(props, context) {
-    const openComment = reactive({ dateKey: false });
+    const openComment = ref([]);
     const handleClickClose = () => {
       context.emit('handleClose');
     }
-    const handleClickComment = (dateKey: string) => {
+    const handleClickComment = (index: number) => {
+      // TODO: 動くようにする
       const open = true
-      openComment[dateKey].value = open
+      console.log(openComment.value[index])
+      if (!openComment.value[index]) { openComment.value.push(index) }
+      console.log(openComment.value)
     };
-    // onMounted(() => {
-    //   props.myShifts.forEach(())
-    //   openComment[dateKey].value = open
-    // });
     const handleInputStartTime = (data: { hours: number, minutes: number }, index: number) => {
       context.emit('inputStartTime', data, index)
     };
