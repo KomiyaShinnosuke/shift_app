@@ -21,7 +21,7 @@ export const useMeStore = defineStore("users", {
           this.me = response;
         })
     },
-    getMeInfo(params: object) {
+    getMeInfo() {
       client.get('http://0.0.0.0:8000/me', {
         headers: {
           Authorization: `Bearer ${this.me.access_token}`,

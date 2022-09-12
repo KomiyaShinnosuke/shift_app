@@ -9,7 +9,7 @@
 import { defineComponent, computed } from 'vue'
 export default defineComponent({
   props: {
-    text: { type: String, default: null },
+    text: { type: [String, Number], default: null },
     style: { type: Object, default: {} },
   },
   setup(props) {

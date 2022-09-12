@@ -28,7 +28,7 @@
       <h1 class="subject">全般</h1>
       <div id="section1" class="content">
         <p class="title">店舗情報の設定</p>
-        <InputWithLabel2 label="【店舗名】" width="320px" value="aaa" @input="handleInput($event, 'email')" />
+        <!-- <InputWithLabel2 label="【店舗名】" width="320px" :value="myCompany.name" @input="handleInput($event, 'email')" /> -->
         <InputWithLabel2 label="【住所】" width="320px" value="aaa" @input="handleInput($event, 'email')" />
         <InputWithLabel2 label="【電話番号】" width="320px" value="aaa" @input="handleInput($event, 'email')" />
         <InputWithLabel2 label="【営業時間】" width="320px" value="aaa" @input="handleInput($event, 'email')" />
@@ -79,18 +79,18 @@
 </template>
 
 <script lang="ts" scoped>
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, onMounted } from 'vue';
 import { Checkbox } from '@/components/atoms/Checkbox'
 import { InputWithLabel2 } from '@/components/atoms/Input'
 import { Table } from '@/components/atoms/Table'
 import { TextWithIcon }  from '@/components/molecules/TextWithIcon'
-
+import { useCompaniesStore } from '~/store/companies'
 import { DAY_OF_WEEK_STR } from '~/static/calendar'
-import client from '~/core/api'
 
 export default defineComponent({
   components: { Checkbox, InputWithLabel2, Table, TextWithIcon },
   setup() {
+    const companiesStore = useCompaniesStore();
     const handleInput = (data: string, type: string) => {
       console.log(777);
     };
@@ -118,11 +118,18 @@ export default defineComponent({
         label: "ホール",
         shifts: [2, 2, 3, 2, 2, 3, 1]
       },
-    ]
+    ];
+    const myCompany = computed(() => {
+      return companiesStore.companies[0];
+    })
+    onMounted(() => {
+      companiesStore.getCompany();
+    });
     return {
       handleInput,
       handleScrollWindow,
       weekDays,
+      myCompany,
     };
   },
 })
