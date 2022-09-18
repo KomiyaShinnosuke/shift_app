@@ -17,7 +17,6 @@ export const useCompaniesStore = defineStore("companies", {
   },
   actions: {
     getCompany() {
-      console.log(777)
       client.get(`http://0.0.0.0:8000/company`)
         .then((data: { data: COMPANY[] }) => {
           this.companies = data.data;

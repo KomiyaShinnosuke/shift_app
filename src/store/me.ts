@@ -19,13 +19,12 @@ export const useMeStore = defineStore("users", {
         .then((data: { data: ME }) => {
           const response = data.data;
           this.me = response;
+          document.cookie = `access_token=${response.access_token}`;
+          document.cookie = `refresh_token=${response.refresh_token}`;
         })
     },
     getMeInfo() {
-      client.get('http://0.0.0.0:8000/me', {
-        headers: {
-          Authorization: `Bearer ${this.me.access_token}`,
-        }})
+      client.get('http://0.0.0.0:8000/me')
         .then((data: { data: object }) => {
           return data;
       })
