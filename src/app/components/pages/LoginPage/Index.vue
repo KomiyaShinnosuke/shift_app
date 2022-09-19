@@ -56,7 +56,7 @@ export default defineComponent({
       }
     };
     const initializeRouter = () => {
-      router.push({ name: 'MonthlyCalendar' })
+      location.reload();
     }
     const onClick = async() => {
       showError.value = false;
