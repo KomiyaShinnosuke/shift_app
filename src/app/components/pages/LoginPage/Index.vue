@@ -27,7 +27,6 @@
 
 <script lang="ts" scoped>
 import { defineComponent, ref } from 'vue';
-import { useRouter } from 'vue-router'
 import { Icon } from '@/components/atoms/Icon'
 import { InputWithLabel } from '@/components/atoms/Input'
 import { PrimaryButton } from '@/components/atoms/Button'
@@ -37,7 +36,6 @@ export default defineComponent({
   components: { Icon, InputWithLabel, PrimaryButton },
   setup() {
     const meStore = useMeStore()
-    const router = useRouter()
     const email = ref<string>('');
     const password = ref<string>('');
     const showError = ref<boolean>(false);

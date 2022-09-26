@@ -64,16 +64,17 @@ export default defineComponent({
     myShifts: { type: Array, default: [] },
   },
   setup(props, context) {
-    const openComment = ref([]);
+    const openComment = [] as number[];
     const handleClickClose = () => {
       context.emit('handleClose');
     }
-    const handleClickComment = (index: number) => {
-      // TODO: 動くようにする
-      const open = true
-      console.log(openComment.value[index])
-      if (!openComment.value[index]) { openComment.value.push(index) }
-      console.log(openComment.value)
+    const handleClickComment = (comment: number) => {
+      const index = openComment.indexOf(comment)
+      if (index == -1) {
+        openComment.push(comment)
+      } else {
+        openComment.splice(index, 1)
+      }
     };
     const handleInputStartTime = (data: { hours: number, minutes: number }, index: number) => {
       context.emit('inputStartTime', data, index)
