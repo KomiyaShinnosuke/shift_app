@@ -20,7 +20,6 @@
   <teleport to="#app">
     <div v-if="isOpen" class="modal">
       <CalendarInput
-        :isOpen="isOpen"
         :myShifts="myShifts"
         @handleClose="handleClickClose"
         @inputStartTime="handleInputStartTime"
