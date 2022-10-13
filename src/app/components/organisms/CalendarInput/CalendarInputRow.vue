@@ -60,6 +60,13 @@ export default defineComponent({
     isOpen: { type: Boolean, default: false },
     shift: { type: Object, default: {} },
   },
+  emits: [
+    'clickComment',
+    'inputStartTime',
+    'inputEndTime',
+    'clickRest',
+    'clickFree',
+  ],
   setup(_, context) {
     const handleClickComment = (comment: number) => {
       context.emit('clickComment', comment)
@@ -68,7 +75,7 @@ export default defineComponent({
       context.emit('inputStartTime', data, index)
     };
     const handleInputEndTime = (data: { hours: number, minutes: number }, index: number) => {
-      context.emit('inputEndTime', data, index)
+      context.emit('inputEndTime', data, index);
     };
     const handleClickRest = (checked: boolean, index: number) => {
       if (typeof checked !== 'boolean') { return }
