@@ -7,6 +7,7 @@
         :viewDate="viewDate"
         @clickChangeDate="handleChangeViewDate"
         @clickToday="handleClickToday"
+        @clickOpenShift="handleClickOpenShift"
       />
     </template>
     <template v-slot:contents>
@@ -28,6 +29,18 @@
         @clickFree="handleClickFree"
       />
     </div>
+    <div v-if="isOpenShift" class="modal">
+      <div class="shift-submit">
+        <header>シフト提出<v-icon @click="handleClickCloseShift">mdi-close</v-icon></header>
+        <body>
+          <InputWithLabel label="提出期間" width="320px" />
+          <InputWithLabel label="提出期限" width="320px" />
+          <PrimaryButton
+            class="button"
+            @click="handleSubmitShift">提出</PrimaryButton>
+        </body>
+      </div>
+    </div>
   </teleport>
 </template>
 
@@ -36,7 +49,9 @@ import { ref, defineComponent, onMounted, computed } from 'vue'
 import { BodyLayout } from '@/components/atoms/Layout'
 import { CalendarHeader } from '@/components/organisms/CalendarHeader'
 import { CalendarInput } from '@/components/organisms/CalendarInput'
+import { InputWithLabel } from '@/components/atoms/Input'
 import { MonthlyCalendar } from './organisms/MonthlyCalendar'
+import { PrimaryButton } from '@/components/atoms/Button'
 import { addMonths } from 'date-fns'
 import { useShiftStore } from '~/store/shifts'
 
@@ -45,13 +60,16 @@ export default defineComponent({
     BodyLayout,
     CalendarHeader,
     CalendarInput,
+    InputWithLabel,
     MonthlyCalendar,
+    PrimaryButton,
   },
   setup() {
     const shiftStore = useShiftStore()
     const currentDate = new Date();
     const viewDate = ref<Date>(new Date());
     const isOpen = ref<Boolean>(false);
+    const isOpenShift = ref<Boolean>(false);
     const myShifts = computed(() => {
       return shiftStore.myShifts;
     })
@@ -70,6 +88,12 @@ export default defineComponent({
     const handleClickClose = () => {
       isOpen.value = false;
     }
+    const handleClickOpenShift = () => {
+      isOpenShift.value = true;
+    }
+    const handleClickCloseShift = () => {
+      isOpenShift.value = false;
+    }
     const handleInputStartTime = (inputTime: Object, key: string) => {
       shiftStore.inputStartTime(inputTime, key);
     }
@@ -82,11 +106,15 @@ export default defineComponent({
     const handleClickFree = (checked: boolean, key: string) => {
       shiftStore.clickFree(checked, key);
     }
+    const handleSubmitShift = () => {
+      console.log('シフト提出のAPI')
+    }
     onMounted(() => {
       shiftStore.getMyShift();
     });
     return {
       isOpen,
+      isOpenShift,
       myShifts,
       limitDate,
       viewDate,
@@ -94,11 +122,13 @@ export default defineComponent({
       handleClickToday,
       handleClickOpen,
       handleClickClose,
+      handleClickOpenShift,
+      handleClickCloseShift,
       handleInputStartTime,
       handleInputEndTime,
       handleClickRest,
       handleClickFree,
-
+      handleSubmitShift,
     }
   },
 })
@@ -120,6 +150,10 @@ export default defineComponent({
   :first-child {
     background: #434242;
     color: white;
+  }
+  .shift-submit {
+    width: 720px;
+    text-align: center;
   }
 }
 </style>

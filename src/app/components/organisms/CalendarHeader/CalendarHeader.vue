@@ -15,7 +15,16 @@
         </div>
       <Icon class="right" @handleClick="handleClickNext" icon="mdi-menu-right" />
     </section>
-    <section class="limit-date">シフト提出締切日: {{ limitDate }}</section>
+    <section class="mode-change">
+      <div class="limit-date">
+        <span class="date">シフト提出締切日: {{ limitDate }}</span>
+        <button class="button" @click="handleClickOpenShift">シフト提出依頼</button>
+      </div>
+      <div class="limit-date">
+        <button class="button">新規シフト作成</button>
+        <button class="button">画面切り替え</button>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -58,6 +67,9 @@ export default defineComponent({
     const handleClickToday = () => {
       context.emit('clickToday')
     };
+    const handleClickOpenShift = () => {
+      context.emit('clickOpenShift')
+    }
     const handleClickViewMode = (viewMode: string) => {
       const upperViewMode = viewMode.charAt(0).toUpperCase() + viewMode.slice(1);
       router.push({ name: `${upperViewMode}Calendar` })
@@ -70,6 +82,7 @@ export default defineComponent({
       handleClickBefore,
       handleClickNext,
       handleClickToday,
+      handleClickOpenShift,
       handleClickViewMode,
     }
   },
@@ -83,7 +96,7 @@ export default defineComponent({
   display: flex;
   height: 60px;
   justify-content: space-between;
-  padding: 0 40px;
+  padding: 8px 40px;
   .date-change {
     display: flex;
     .today {
@@ -97,8 +110,18 @@ export default defineComponent({
       margin: 0 24px;
     }
   }
-  .limit-date {
-    color: #C54949;
+  .mode-change {
+    .limit-date {
+      .date {
+        color: #C54949;
+      }
+      .button {
+        background-color: #C4C4C4;
+        border-radius: 8px;
+        margin-left: 8px;
+        padding: 2px;
+      }
+    }
   }
 }
 </style>
